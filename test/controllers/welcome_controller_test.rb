@@ -6,7 +6,7 @@ class WelcomeControllerTest < ActionController::TestCase
     assert_response :success
   end
   test "should pass basic test" do
-  	# just a dummy test
+  	# just a dummy test Does it pass
   	assert true
   end
 end
