@@ -1,4 +1,6 @@
 Chess::Application.configure do
+
+  config.actio_mailer.default_url_options = {:host => 'git@heroku.com:chess-rails-riders.git'}
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
