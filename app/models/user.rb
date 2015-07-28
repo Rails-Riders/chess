@@ -5,6 +5,5 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
  	has_many :games
- 	# The next line will be activated later after the pieces model is built
- 	# has_many :pieces
+ 	has_many :pieces
 end
