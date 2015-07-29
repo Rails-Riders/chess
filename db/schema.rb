@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20150729041232) do
   end
 
   create_table "pieces", force: true do |t|
-    t.string   "integer"
+    t.string   "piece_type"
     t.integer  "active"
     t.text     "square_location"
     t.integer  "game_id"
