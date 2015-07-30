@@ -1,5 +1,5 @@
 class Piece < ActiveRecord::Base
-
+	
 	serialize :square_location
 
 
