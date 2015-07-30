@@ -8,6 +8,7 @@ class CreatePieces < ActiveRecord::Migration
     	t.integer :player_id
 
     	t.timestamps
+        t.references :pieces, index: true
     end
   end
 end
