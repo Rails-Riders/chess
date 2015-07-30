@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
+ActiveRecord::Schema.define(version: 20150728014635) do
+=======
 ActiveRecord::Schema.define(version: 20150729235323) do
+>>>>>>> e8908f257442e2069016c4053c83652a5460085a
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,7 +33,11 @@ ActiveRecord::Schema.define(version: 20150729235323) do
   end
 
   create_table "pieces", force: true do |t|
+<<<<<<< HEAD
+    t.string   "type"
+=======
     t.string   "piece_type"
+>>>>>>> e8908f257442e2069016c4053c83652a5460085a
     t.integer  "active"
     t.text     "square_location"
     t.integer  "game_id"
