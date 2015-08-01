@@ -14,7 +14,8 @@ class GameTest < ActiveSupport::TestCase
   test "number of rooks" do
     game = Game.create
 
-    # puts Piece.where( :type => 'Rook').inspect
+    puts game.pieces.where( :type => 'Rook').inspect
+    puts Piece.where( :type => 'Rook' ).inspect
 
     num_of_rooks = game.pieces.where( :type => 'Rook' ).count
 
