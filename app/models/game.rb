@@ -48,7 +48,7 @@ class Game < ActiveRecord::Base
     end  
 
     # Update pieces with additional attributes
-    Piece.update_all( :active  => 1,
-                      :game_id => game_id[0] )    
+    # Piece.update_all( :active  => 1,
+    #                   :game_id => game_id[0] )    
   end
 end

@@ -16,7 +16,7 @@ class GameTest < ActiveSupport::TestCase
 
     # puts Piece.where( :type => 'Rook').inspect
 
-    num_of_rooks = Piece.where( :type => 'Rook' ).count
+    num_of_rooks = game.pieces.where( :type => 'Rook' ).count
 
     assert_equal 4, num_of_rooks
   end
