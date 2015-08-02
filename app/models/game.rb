@@ -18,29 +18,47 @@ class Game < ActiveRecord::Base
     2.times do
       # Create 8 pawns                   
       1.upto(8) do |x|
-        Pawn.create( :square_location => [x, y2] )
+        Pawn.create( :x_position => x,
+                     :y_position => y2,
+                     :active     => 1,
+                     :game_id    => game_id[0] )
       end
 
       # Create 2 rooks 
       1.step(8, 7) do |x|
-        Rook.create( :square_location => [x, y] )
+        Rook.create( :x_position => x,
+                     :y_position => y,
+                     :active     => 1,
+                     :game_id    => game_id[0] )
       end
 
       # Create 2 knights
       2.step(7, 5) do |x|
-        Knight.create( :square_location => [x, y] )
+        Knight.create( :x_position => x,
+                       :y_position => y,
+                       :active     => 1,
+                       :game_id    => game_id[0] )
       end
 
       # Create 2 bishops
       3.step(6, 3) do |x|
-        Bishop.create( :square_location => [x, y] )
+        Bishop.create( :x_position => x,
+                       :y_position => y,
+                       :active     => 1,
+                       :game_id    => game_id[0] )
       end
 
       # Create a queen
-      Queen.create( :square_location => [4, y] )
+      Queen.create( :x_position => 4,
+                    :y_position => y,
+                    :active     => 1,
+                    :game_id    => game_id[0] )
 
       # Create a king
-      King.create( :square_location => [5, y] )
+      King.create( :x_position => 5,
+                   :y_position => y,
+                   :active     => 1,
+                   :game_id    => game_id[0] )
 
       # Update y and y2 values for the black pieces' y coordinates
       y = 8
