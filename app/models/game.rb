@@ -5,11 +5,8 @@ class Game < ActiveRecord::Base
   after_create :populate_board!
 
   def populate_board!
-    # Store the game's id in a var. Note: .pluck returns an array
-    game_id = Game.pluck(:id)
-
-    # These are initialized to the white pieces' y coordinates.
-    # Note: y2 is for the pawns' y coordinate.
+    # These are initialized to the white pieces' y coordinates. y2 is for the
+    # pawns' y coordinate.
     y = 1
     y2 = 2
 
@@ -21,7 +18,7 @@ class Game < ActiveRecord::Base
         Pawn.create( :x_position => x,
                      :y_position => y2,
                      :active     => 1,
-                     :game_id    => game_id[0] )
+                     :game_id    => self.id )
       end
 
       # Create 2 rooks 
@@ -29,7 +26,7 @@ class Game < ActiveRecord::Base
         Rook.create( :x_position => x,
                      :y_position => y,
                      :active     => 1,
-                     :game_id    => game_id[0] )
+                     :game_id    => self.id )
       end
 
       # Create 2 knights
@@ -37,7 +34,7 @@ class Game < ActiveRecord::Base
         Knight.create( :x_position => x,
                        :y_position => y,
                        :active     => 1,
-                       :game_id    => game_id[0] )
+                       :game_id    => self.id )
       end
 
       # Create 2 bishops
@@ -45,28 +42,24 @@ class Game < ActiveRecord::Base
         Bishop.create( :x_position => x,
                        :y_position => y,
                        :active     => 1,
-                       :game_id    => game_id[0] )
+                       :game_id    => self.id )
       end
 
       # Create a queen
       Queen.create( :x_position => 4,
                     :y_position => y,
                     :active     => 1,
-                    :game_id    => game_id[0] )
+                    :game_id    => self.id )
 
       # Create a king
       King.create( :x_position => 5,
                    :y_position => y,
                    :active     => 1,
-                   :game_id    => game_id[0] )
+                   :game_id    => self.id )
 
       # Update y and y2 values for the black pieces' y coordinates
       y = 8
       y2 = 7
     end  
-
-    # Update pieces with additional attributes
-    # Piece.update_all( :active  => 1,
-    #                   :game_id => game_id[0] )    
   end
 end

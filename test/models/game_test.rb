@@ -4,9 +4,7 @@ class GameTest < ActiveSupport::TestCase
   test "number of pawns" do
     game = Game.create
 
-    # puts Piece.where( :type => 'Pawn' ).pluck( :type, :x_position, :y_position ).inspect
-
-    num_of_pawns = Piece.where( :type => 'Pawn', :game_id => game.id ).count
+    num_of_pawns = game.pieces.where( :type => 'Pawn' ).count
 
     assert_equal 16, num_of_pawns
   end
@@ -14,7 +12,7 @@ class GameTest < ActiveSupport::TestCase
   test "correct pawn positions" do
     game = Game.create
 
-    correct_positions = [[1, 2], [2, 2], [3, 2], [4, 2],
+    correct_positions = [[2, 2], [1, 2], [3, 2], [4, 2],
                          [5, 2], [6, 2], [7, 2], [8, 2],
                          [1, 7], [2, 7], [3, 7], [4, 7],
                          [5, 7], [6, 7], [7, 7], [8, 7]]
@@ -29,9 +27,6 @@ class GameTest < ActiveSupport::TestCase
 
   test "number of rooks" do
     game = Game.create
-
-    # puts game.pieces.find( :type => 'Rook').inspect
-    # puts Piece.where( :type => 'Rook' ).pluck( :type, :x_position, :y_position ).inspect
 
     num_of_rooks = game.pieces.where( :type => 'Rook' ).count
 
@@ -54,8 +49,6 @@ class GameTest < ActiveSupport::TestCase
   test "number of knights" do
     game = Game.create
 
-    # puts Piece.where( :type => 'Knight' ).pluck( :type, :x_position, :y_position ).inspect
-
     num_of_knights = game.pieces.where( :type => 'Knight' ).count
 
     assert_equal 4, num_of_knights
@@ -76,8 +69,6 @@ class GameTest < ActiveSupport::TestCase
 
   test "number of bishops" do
     game = Game.create
-
-    # puts Piece.where( :type => 'Bishop' ).pluck( :type, :x_position, :y_position ).inspect
 
     num_of_bishops = game.pieces.where( :type => 'Bishop' ).count
 
@@ -100,8 +91,6 @@ class GameTest < ActiveSupport::TestCase
   test "number of queens" do
     game = Game.create
 
-    # puts Piece.where( :type => 'Queen' ).pluck( :type, :x_position, :y_position ).inspect
-
     num_of_queens = game.pieces.where( :type => 'Queen', :game_id => game.id ).count
 
     assert_equal 2, num_of_queens
@@ -122,8 +111,6 @@ class GameTest < ActiveSupport::TestCase
 
   test "number of kings" do
     game = Game.create
-
-    # puts Piece.where( :type => 'King' ).pluck( :type, :x_position, :y_position ).inspect
 
     num_of_kings = game.pieces.where( :type => 'King' ).count
 
@@ -164,19 +151,6 @@ class GameTest < ActiveSupport::TestCase
     # for a given game
     game = Game.create
     another_game = Game.create
-
-    puts
-    puts "game's id is #{game.id}"
-    puts "Number of game's queens is #{game.pieces.where( :type => 'Queen',:game_id => game.id).count }"  
-    puts "And the following array holds its queens and their corresponding game_id's:"
-    puts game.pieces.where( :type => 'Queen', :game_id => game.id).pluck( :type, :game_id).inspect
-    puts
-    puts "another_game's id is #{another_game.id}"
-    puts "Number of another_game's queens is #{another_game.pieces.where( :type => 'Queen', :game_id => another_game.id).count }"
-    puts "And the following array holds its queens and their corresponding game_id's:"
-    puts another_game.pieces.where( :type => 'Queen', :game_id => another_game.id).pluck( :type, :game_id).inspect
-
-    # puts Piece.where( :type => 'Queen' ).pluck( :type, :x_position, :y_position ).inspect
 
     game_queens = game.pieces.where( :type => 'Queen', :game_id => game.id ).count
 
