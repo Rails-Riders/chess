@@ -17,8 +17,7 @@
               <% @pieces.detect do |piece| %>
                 <% if piece.x_position == col && piece.y_position == row %>
                   <div class="piece", style="color:red"><%= piece.type %></div>
-                <% else %>
-                  <div class="empty-space", style="color:green">empty</div>
+                
                 <% end %>
               <% end %>
             </td>
