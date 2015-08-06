@@ -1,4 +1,5 @@
 class GamesController < ApplicationController
+	before_action :game, only: :show 
 	def new
 		@game = Game.new
 	end
@@ -8,14 +9,13 @@ class GamesController < ApplicationController
 	end
 
 	def show
-		@game = Game.find(params[:id])
-		@pieces = @game.pieces.all
+		@pieces = game.pieces
 	end
   
   private
 
   def game
-  	@game ||= Game.where(id: params[:id])
+  	@game ||= Game.find(params[:id])
   end
 
   def game_params
