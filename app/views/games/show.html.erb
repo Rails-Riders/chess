@@ -7,7 +7,6 @@
     <tbody>
       <% 8.downto(1) do |row| %>
         <tr>
-          <th></th>
           <% 1.upto(8) do |col| %>
             <% if row % 2 != 0 %>
               <td class="<%= cycle('dark', 'light') %>">
@@ -16,8 +15,7 @@
             <% end %>
               <% @pieces.detect do |piece| %>
                 <% if piece.x_position == col && piece.y_position == row %>
-                  <div class="piece", style="color:red"><%= piece.type %></div>
-                
+                  <div class="piece", style="color:red"><%= piece_color(piece) %></div>
                 <% end %>
               <% end %>
             </td>
