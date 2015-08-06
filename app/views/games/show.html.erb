@@ -8,11 +8,7 @@
       <% 8.downto(1) do |row| %>
         <tr>
           <% 1.upto(8) do |col| %>
-            <% if row % 2 != 0 %>
-              <td class="<%= cycle('dark', 'light') %>">
-            <% else %>
-              <td class="<%= cycle('light', 'dark') %>">
-            <% end %>
+              <td class= "<%= board_squares(row) %>">
               <% @pieces.detect do |piece| %>
                 <% if piece.x_position == col && piece.y_position == row %>
                   <div class="piece", style="color:red"><%= piece_color(piece) %></div>
@@ -25,6 +21,6 @@
     </tbody>
   </table>
      <br />
-<a href="/games/show">Sign In</a>
+<%= link_to 'Sign In', new_user_session_path %>
   </div>
 </div>

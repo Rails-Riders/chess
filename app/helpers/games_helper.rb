@@ -5,4 +5,8 @@ module GamesHelper
       when piece.color == 1 then "White\n" + piece.type
     end
   end
+
+  def board_squares(row)
+  	row % 2 != 0 ? cycle('dark', 'light') : cycle('light', 'dark')
+  end
 end
