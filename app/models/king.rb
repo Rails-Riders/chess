@@ -1,64 +1,23 @@
 class King < Piece
-  MIN_POSITION = 1
-  MAX_POSITION = 8
+  def valid_move?(x_dest, y_dest)
+    # Guard against a destination matching a piece's current location
+    return false if [x_dest, y_dest] == [self.x_position, self.y_position]
 
-  def move_left
-    return if self.x_position == MIN_POSITION
+    # Guard against a destination that is outside a chessboard's grid
+    return false if x_dest < 1 || x_dest > 8
+    return false if y_dest < 1 || y_dest > 8
     
-    self.update(:x_position => (self.x_position - 1))
-  end
+    # Get the difference between a piece's current x_position and x_dest
+    x_delta = (self.x_position - x_dest).abs
 
-  def move_right
-    return if self.x_position == MAX_POSITION
-    
-    self.update(:x_position => (self.x_position + 1))
-  end
+    # Get the difference between a piece's current y_position and y_dest
+    y_delta = (self.y_position - y_dest).abs
 
-  def move_up
-    return if self.y_position == MAX_POSITION
-    
-    self.update(:y_position => (self.y_position + 1))
-  end
-
-  def move_down
-    return if self.y_position == MIN_POSITION
-    
-    self.update(:y_position => (self.y_position - 1))
-  end
-
-  def move_NE
-    return if self.x_position == MAX_POSITION
-    return if self.y_position == MAX_POSITION
-
-    move_right
-
-    move_up
-  end
-
-  def move_SE
-    return if self.x_position == MAX_POSITION
-    return if self.y_position == MIN_POSITION
-
-    move_right
-    
-    move_down
-  end
-
-  def move_SW
-    return if self.x_position == MIN_POSITION
-    return if self.y_position == MIN_POSITION
-
-    move_left
-    
-    move_down
-  end
-
-  def move_NW
-    return if self.x_position == MIN_POSITION
-    return if self.y_position == MAX_POSITION
-
-    move_left
-
-    move_up
+    # Ensure the params match a king's moveset of 1 square in any direction
+    if x_delta < 2 && y_delta < 2
+      true
+    else 
+      false
+    end
   end
 end

@@ -1,242 +1,161 @@
 require 'test_helper'
 
 class KingTest < ActiveSupport::TestCase
-    test "move king left with no obstructions" do
+  test "moves that are valid" do
     king = Piece.create(:type => 'King', :x_position => 5, :y_position => 5)
 
-    king.move_left
+    # Assume is_obstructed? == false (this means there are no obstructions)
+    expected = true
+    
+    # Test a valid move east
+    actual = king.valid_move?(6, 5)
 
-    expected = [4, 5]
+    assert_equal expected, actual
 
-    actual = [king.x_position, king.y_position]
+    # Test a valid move west
+    actual = king.valid_move?(4, 5)
+
+    assert_equal expected, actual
+
+    # Test a valid move south
+    actual = king.valid_move?(5, 4)
+
+    assert_equal expected, actual
+
+    # Test a valid move north
+    actual = king.valid_move?(5, 6)
+
+    assert_equal expected, actual
+
+    # Test a valid move northeast
+    actual = king.valid_move?(6, 6)
+
+    assert_equal expected, actual
+
+    # Test a valid move southeast
+    actual = king.valid_move?(6, 4)
+
+    assert_equal expected, actual
+
+    # Test a valid move southwest
+    actual = king.valid_move?(4, 4)
+
+    assert_equal expected, actual
+
+    # Test a valid move northwest
+    actual = king.valid_move?(4, 6)
 
     assert_equal expected, actual
   end
 
-  test "stop king from moving left off the chessboard" do
-    king = Piece.create(:type => 'King', :x_position => 1, :y_position => 1)
-
-    king.move_left
-
-    expected = [1, 1]
-
-    actual = [king.x_position, king.y_position]
-
-    assert_equal expected, actual
-  end
-
-  test "move king right with no obstructions" do
+  test "moves that are invalid" do
     king = Piece.create(:type => 'King', :x_position => 5, :y_position => 5)
 
-    king.move_right
-
-    expected = [6, 5]
-
-    actual = [king.x_position, king.y_position]
-
-    assert_equal expected, actual
-  end
-
-  test "stop king from moving right off the chessboard" do
-    king = Piece.create(:type => 'King', :x_position => 8, :y_position => 1)
-
-    king.move_right
-
-    expected = [8, 1]
-
-    actual = [king.x_position, king.y_position]
-
-    assert_equal expected, actual
-  end
-
-  test "move king up with no obstructions" do
-    king = Piece.create(:type => 'King', :x_position => 5, :y_position => 5)
-
-    king.move_up
-
-    expected = [5, 6]
-
-    actual = [king.x_position, king.y_position]
-
-    assert_equal expected, actual
-  end
-
-  test "stop king from moving up off the chessboard" do
-    king = Piece.create(:type => 'King', :x_position => 5, :y_position => 8)
- 
-    king.move_up
- 
-    expected = [5, 8]
- 
-    actual = [king.x_position, king.y_position]
- 
-    assert_equal expected, actual
-  end
-
-  test "move king down with no obstructions" do
-    king = Piece.create(:type => 'King', :x_position => 5, :y_position => 5)
-
-    king.move_down
-
-    expected = [5, 4]
-
-    actual = [king.x_position, king.y_position]
-
-    assert_equal expected, actual
-  end
-
-  test "stop king from moving down off the chessboard" do
-    king = Piece.create(:type => 'King', :x_position => 5, :y_position => 1)
-  
-    king.move_down
-  
-    expected = [5, 1]
-  
-    actual = [king.x_position, king.y_position]
-  
-    assert_equal expected, actual
-  end
-
-  test "move king North East with no obstructions" do
-    king = Piece.create(:type => 'King', :x_position => 5, :y_position => 5)
-
-    king.move_NE
-
-    expected = [6, 6]
-
-    actual = [king.x_position, king.y_position]
-
-    assert_equal expected, actual
-  end
-
-  test "stop king from moving North East off the chessboard" do
-    # Test when a piece is at the chessboard's far right side with room to move up
-    king = Piece.create(:type => 'King', :x_position => 8, :y_position => 5)
+    # Assume is_obstructed? == false (this means there are no obstructions)
     
-    king.move_NE
+    expected = false
+
+    # Test invalid move east
+    actual = king.valid_move?(7, 5)
+
+    assert_equal expected, actual
+
+    # Test invalid move west
+    actual = king.valid_move?(3, 5)
+
+    assert_equal expected, actual
+
+    # Test invalid move south
+    actual = king.valid_move?(5, 3)
  
-    expected = [8, 5]
- 
-    actual = [king.x_position, king.y_position]
- 
     assert_equal expected, actual
 
-    # Test when a piece is at the chessboard's top with space to move right
-    king.update(:x_position => 5, :y_position => 8)
-    
-    king.move_NE
-    
-    expected = [5, 8]
-    
-    actual = [king.x_position, king.y_position]
-    
-    assert_equal expected, actual
-  end
-
-  test "move king South East with no obstructions" do
-    king = Piece.create(:type => 'King', :x_position => 5, :y_position => 5)
-
-    king.move_SE
-
-    expected = [6, 4]
-
-    actual = [king.x_position, king.y_position]
+    # Test invalid move north
+    actual = king.valid_move?(5, 7)
 
     assert_equal expected, actual
-  end
 
-  test "stop king from moving South East off the chessboard" do
-    # Test when a piece is at the chessboard's far right side with room to move down
-    king = Piece.create(:type => 'King', :x_position => 8, :y_position => 5)
-    
-    king.move_SE
-  
-    expected = [ 8, 5 ]
-  
-    actual = [king.x_position, king.y_position]
-  
+    # Test invalid move northeast
+    actual = king.valid_move?(7, 7)
+
     assert_equal expected, actual
 
-    # Test when a piece is at the chessboard's bottom with space to move right
+    # Test invalid move southeast
+    actual = king.valid_move?(7, 3)
+
+    assert_equal expected, actual
+
+    # Test invalid move southwest
+    actual = king.valid_move?(3, 3)
+
+    assert_equal expected, actual
+
+    # Test invalid move northwest
+    actual = king.valid_move?(3, 7)
+
+    assert_equal expected, actual
+
+    #--------------------------------------------------
+    # Tests for edge cases:
+
+    # Test invalid non-move where the params match the piece's current location
+    actual = king.valid_move?(5, 5)
+
+    assert_equal expected, actual
+
+    # Test invalid move east ouside the chessboard
+    king.update(:x_position => 8, :y_position => 5)
+
+    actual = king.valid_move?(9, 5)
+
+    assert_equal expected, actual
+
+    # Test invalid move south ouside the chessboard
     king.update(:x_position => 5, :y_position => 1)
-    
-    king.move_SE
-    
-    expected = [5, 1]
-    
-    actual = [king.x_position, king.y_position]
-    
-    assert_equal expected, actual
-  end
 
-  test "move king South West with no obstructions" do
-    king = Piece.create(:type => 'King', :x_position => 5, :y_position => 5)
-
-    king.move_SW
-
-    expected = [4, 4]
-
-    actual = [king.x_position, king.y_position]
-
-    assert_equal expected, actual
-  end
-
-  test "stop king from moving South West off the chessboard" do
-    # Test when a piece is at the chessboard's far left side with room to move down
-    king = Piece.create(:type => 'King', :x_position => 1, :y_position => 5)
-    
-    king.move_SW
-  
-    expected = [1, 5]
-  
-    actual = [king.x_position, king.y_position]
-  
-    assert_equal expected, actual
-
-    # Test when a piece is at the chessboard's bottom with space to move left
-    king.update(:x_position => 5, :y_position => 1)
-    
-    king.move_SW
-    
-    expected = [5, 1]
-    
-    actual = [king.x_position, king.y_position]
-    
-    assert_equal expected, actual
-  end
-
-  test "move king North West with no obstructions" do
-    king = Piece.create(:type => 'King', :x_position => 5, :y_position => 5)
-
-    king.move_NW
-
-    expected = [4, 6]
-
-    actual = [king.x_position, king.y_position]
-
-    assert_equal expected, actual
-  end
-
-  test "stop king from moving North West off the chessboard" do
-    # Test when a piece is at the chessboard's far left side with room to move up
-    king = Piece.create(:type => 'King', :x_position => 1, :y_position => 5)
-
-    king.move_NW
-
-    expected = [1, 5]
-
-    actual = [king.x_position, king.y_position]
+    actual = king.valid_move?(5, 0)
 
     assert_equal expected, actual
 
-    # Test when a piece is at the chessboard's top with space to move left
+    # Test invalid move west ouside the chessboard
+    king.update(:x_position => 1, :y_position => 5)
+
+    actual = king.valid_move?(0, 5)
+
+    assert_equal expected, actual
+
+    # Test invalid move north ouside the chessboard
     king.update(:x_position => 5, :y_position => 8)
 
-    king.move_NW
+    actual = king.valid_move?(5, 9)
 
-    expected = [5, 8]
+    assert_equal expected, actual
 
-    actual = [king.x_position, king.y_position]
+    # Test invalid move northeast ouside the chessboard
+    king.update(:x_position => 8, :y_position => 8)
+
+    actual = king.valid_move?(9, 9)
+
+    assert_equal expected, actual
+
+    # Test invalid move southeast ouside the chessboard
+    king.update(:x_position => 8, :y_position => 1)
+
+    actual = king.valid_move?(9, 0)
+
+    assert_equal expected, actual
+
+    # Test invalid move southwest ouside the chessboard
+    king.update(:x_position => 1, :y_position => 1)
+
+    actual = king.valid_move?(0, 0)
+
+    assert_equal expected, actual
+
+    # Test invalid move northeast ouside the chessboard
+    king.update(:x_position => 1, :y_position => 8)
+
+    actual = king.valid_move?(0, 9)
 
     assert_equal expected, actual
   end
