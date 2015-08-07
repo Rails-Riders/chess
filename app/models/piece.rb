@@ -5,4 +5,5 @@ class Piece < ActiveRecord::Base
 	def self.types
 		%w(Pawn Rook Knight Bishop Queen King)
 	end
+
 end
