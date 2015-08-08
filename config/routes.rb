@@ -8,6 +8,7 @@ Chess::Application.routes.draw do
   root 'welcome#index'
   resources :games, :only => [:new, :create, :show] 
   resources :pieces, :only => [:show, :update]
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
