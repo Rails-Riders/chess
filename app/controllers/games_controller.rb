@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
 	before_action :game, only: :show 
+	
 	def new
 		@game = Game.new
 	end
