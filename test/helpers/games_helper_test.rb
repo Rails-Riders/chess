@@ -14,7 +14,7 @@ class GamesHelperTest < ActionView::TestCase
 		piece = game.pieces.first
 		expected = "White\n" + piece.type
 
-		assert_equal "White Pawn", piece_color(piece)
+		assert_equal expected, piece_color(piece)
 	end
 
 end
