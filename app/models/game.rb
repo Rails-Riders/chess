@@ -9,6 +9,7 @@ class Game < ActiveRecord::Base
     # pawns' y coordinate.
     y = 1
     y2 = 2
+    color = 1
 
     # Create white pieces locations on 1st loop and then 
     # the black pieces locations on the 2nd loop
@@ -18,7 +19,8 @@ class Game < ActiveRecord::Base
         Pawn.create( :x_position => x,
                      :y_position => y2,
                      :active     => 1,
-                     :game_id    => self.id )
+                     :game_id    => self.id,
+                     :color      => color )
       end
 
       # Create 2 rooks 
@@ -26,7 +28,8 @@ class Game < ActiveRecord::Base
         Rook.create( :x_position => x,
                      :y_position => y,
                      :active     => 1,
-                     :game_id    => self.id )
+                     :game_id    => self.id,
+                     :color      => color )
       end
 
       # Create 2 knights
@@ -34,7 +37,8 @@ class Game < ActiveRecord::Base
         Knight.create( :x_position => x,
                        :y_position => y,
                        :active     => 1,
-                       :game_id    => self.id )
+                       :game_id    => self.id,
+                       :color      => color )
       end
 
       # Create 2 bishops
@@ -42,24 +46,28 @@ class Game < ActiveRecord::Base
         Bishop.create( :x_position => x,
                        :y_position => y,
                        :active     => 1,
-                       :game_id    => self.id )
+                       :game_id    => self.id,
+                       :color      => color )
       end
 
       # Create a queen
       Queen.create( :x_position => 4,
                     :y_position => y,
                     :active     => 1,
-                    :game_id    => self.id )
+                    :game_id    => self.id,
+                    :color      => color )
 
       # Create a king
       King.create( :x_position => 5,
                    :y_position => y,
                    :active     => 1,
-                   :game_id    => self.id )
+                   :game_id    => self.id,
+                   :color      => color )
 
       # Update y and y2 values for the black pieces' y coordinates
       y = 8
       y2 = 7
+      color = 0
     end  
   end
 end
