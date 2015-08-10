@@ -1,7 +1,7 @@
 class Game < ActiveRecord::Base
 	belongs_to :user
   has_many :pieces
-
+  
   after_create :populate_board!
 
   def populate_board!
@@ -64,7 +64,7 @@ class Game < ActiveRecord::Base
                    :game_id    => self.id,
                    :color      => color )
 
-      # Update y and y2 values for the black pieces' y coordinates
+      # Update y, y2, and color values for the black pieces' attributes
       y = 8
       y2 = 7
       color = 0
