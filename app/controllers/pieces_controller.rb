@@ -1,8 +1,8 @@
 class PiecesController < ApplicationController
 
 	def show
-		@current_piece = Piece.find(params[:id])
-		@pieces = @current_piece.game.pieces
+		@piece = Piece.find(params[:id])
+		@game = @piece.game
 		render "shared/chessboard"
 	end
 
