@@ -8,9 +8,5 @@ module GamesHelper
 
   def board_squares(row)
   	row % 2 != 0 ? cycle('dark', 'light') : cycle('light', 'dark')
-  end
-
-  def hilite(piece)
-  	'hilite' if piece.id == params[:id]
   end 
 end

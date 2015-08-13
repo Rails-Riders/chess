@@ -4,7 +4,6 @@ class PiecesController < ApplicationController
 		@select_pc = Piece.find(params[:id])
 		@game = @select_pc.game.id
 		@pieces = Game.find(@game).pieces
-		render "shared/_chessboard"
 	end
 
 	def update
