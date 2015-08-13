@@ -8,10 +8,10 @@
       <% 8.downto(1) do |row| %>
         <tr>
           <% 1.upto(8) do |col| %>
-              <td class= "<%= board_squares(row) %>">
-              <% @pieces.detect do |piece| %>
+            <td class= "<%= board_squares(row) %> squares">
+              <%  @pieces.detect do |piece| %>
                 <% if piece.x_position == col && piece.y_position == row %>
-                  <div class="piece", style="color:red"><%= piece_color(piece) %></div>
+                  <%= link_to piece_color(piece), piece_path(piece.id), :class => hilite(piece) %>
                 <% end %>
               <% end %>
             </td>
