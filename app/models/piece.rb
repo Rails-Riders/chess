@@ -1,106 +1,76 @@
-class Piece < ActiveRecord::Base
-	belongs_to :user
-	belongs_to :game
+def is_obstructed?(dest_x, dest_y)
+    # Get the piece's starting coordinates
+    start_x = self.x_position
+    start_y = self.y_position
 
- def is_obstructed?(start_x, start_y, dest_x, dest_y)
+    # Get the difference between the starting and ending x and y coordinates
+    delta_x = (start_x - dest_x).abs
+    delta_y = (start_y - dest_y).abs
 
- 	#board for testing?
-    board = [
-              ['r','k',nil,'q', 'nil', 'b', 'n', 'r'],
-              ['p', 'p', nil, nil,'p','p','p', 'p'],
-              [nil, nil, nil, nil, nil, nil, nil, nil],
-              [nil, nil, 'p', 'n', nil, nil, nil, nil],
-              [nil, nil, nil, nil, nil, nil, nil, nil],
-              ['b', 'p', nil, nil, nil, nil, nil, 'b'],
-              [nil, nil, 'p', 'p', 'p', 'p', 'p', 'p'],
-              ['r',nil, nil,'q', 'k', 'b', 'n', 'r']
-            ]
+    # Prep x and y incrementors
+    increment_x, increment_y = 0
 
-    # For horizontal 
-    if start_x == dest_x
-      if start_y < dest_y
-        return true if for_horizontal_movement(start_y, dest_y, start_x, board, 1)
-      end
-      if start_y > dest_y
-        return true if for_horizontal_movement(start_y, dest_y, start_x, board, -1)
-      end
+    # Make increment_x go east (1) or west (-1)
+    if start_x < dest_x
+      increment_x = 1
+    else
+      increment_x = -1
     end
 
-    #For vertical 
+    # Make increment_y go north (1) or south (-1)
+    if start_y < dest_y
+      increment_y = 1
+    else
+      increment_y = -1
+    end
+
+    # This function checks the database for a potential obstacle
+    def obstacle?(check_x, check_y)
+      game.pieces.exists?(:x_position => check_x,
+                          :y_position => check_y,
+                          :active => 1)   
+    end
+    
+    #--------------------------------------------------
+    # Find any obstacles when the destination is on a:
+    # - horizontal path
     if start_y == dest_y
-      if start_x < dest_x
-        return true if for_vertical_movement(start_x, dest_x, start_y, board, 1) 
+      check_x = start_x + increment_x
+
+      while check_x - dest_x != 0 do
+        return true if obstacle?(check_x, dest_y) 
+
+        check_x += increment_x
       end
-      if start_x > dest_x
-        return true if for_vertical_movement(start_x, dest_x, start_y, board, -1) 
+
+      return false
+    #--------------------------------------------------
+    # - vertical path
+    elsif start_x == dest_x
+      check_y = start_y + increment_y
+
+      while check_y - dest_y != 0 do
+        return true if obstacle?(dest_x, check_y) 
+
+        check_y += increment_y
       end
+
+      return false
+    #--------------------------------------------------
+    # - diagonal path
+    else
+      return "Error: Illegal move" if delta_x != delta_y
+     
+      check_x = start_x + increment_x
+      check_y = start_y + increment_y
+
+      while (check_x - dest_x != 0) && (check_y - dest_y != 0) do
+        return true if obstacle?(check_x, check_y) 
+
+        check_x += increment_x
+        check_y += increment_y
+      end
+
+      return false
     end
-
-    #For diagonal 
-    if start_x != dest_x && start_y != dest_y
-      if start_x < dest_x && start_y < dest_y 
-        return true if for_diagonal_movement_left_to_right(start_x, dest_x, start_y, dest_y, board, 1 )
-      end
-      if start_x < dest_x && start_y > dest_y
-        return true if for_diagonal_movement_right_to_left(start_x, dest_x, start_y, dest_y, board, 1, -1)
-      end
-       if start_x > dest_x && start_y > dest_y
-        return true if for_diagonal_movement_left_to_right(start_x, dest_x, start_y, dest_y, board, -1 )
-      end
-       if start_x > dest_x && start_y < dest_y
-        return true if for_diagonal_movement_right_to_left(start_x, dest_x, start_y, dest_y, board, -1, 1)
-      end
-    end  
-  end#End is_obstructed?
-
-  #For Horizontal
-  def for_horizontal_movement(start_y, dest_y, start_x, board, increment)
-    new_y = start_y
-      while new_y - dest_y != 0
-        new_y = new_y + increment
-        if board[start_x][new_y] != nil
-          return true
-        end
-      end
-  end 
-
-  #For Vertical
-  def for_vertical_movement(start_x, dest_x, start_y, board, increment)
-    new_x = start_x
-     while new_x - dest_x != 0
-       new_x = new_x + increment
-       if board[new_x][start_y] != nil
-         return true
-       end
-     end
-  end
-
-  #For Diagonal Left to Right
-  def for_diagonal_movement_left_to_right(start_x, dest_x, start_y, dest_y, board, increment )
-    new_x = start_x
-      new_y = start_y
-        while new_x - dest_x != 0 && new_y - dest_y != 0
-          new_x = new_x + increment
-          new_y = new_y + increment
-          if board[new_x][new_y] != nil
-            return true
-          end
-        end
-  end
-
-  #For Diagonal Right to Left
-  def for_diagonal_movement_right_to_left(start_x, dest_x, start_y, dest_y, board, increment1, increment2 )
-    new_x = start_x
-      new_y = start_y
-        while new_x - dest_x != 0 && new_y - dest_y != 0
-          new_x = new_x + increment1
-          new_y = new_y + increment2
-          if board[new_x][new_y] != nil
-            return true
-          end
-        end
-  end
-
-
-
-end#End Piece Class
+  end # of is_obstructed?
