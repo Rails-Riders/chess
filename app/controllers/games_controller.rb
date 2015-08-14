@@ -12,6 +12,7 @@ class GamesController < ApplicationController
 	def show
 		@game = Game.find(params[:id])
 		@pieces = game.pieces
+		@select_pc = Piece.first
 	end
   
   private

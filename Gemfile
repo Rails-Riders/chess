@@ -36,6 +36,9 @@ gem 'devise', '>= 3.2.4'
 # SimpleForm with Bootstrap3 integration
 gem 'simple_form'
 
+# For debugging
+gem 'pry'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
