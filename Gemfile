@@ -39,6 +39,10 @@ gem 'simple_form'
 # For debugging
 gem 'pry'
 
+# FactoryGirl for testing
+gem 'factory_girl_rails', '~> 4.0'
+
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
