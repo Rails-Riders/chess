@@ -78,5 +78,5 @@ class Piece < ActiveRecord::Base
 
         return false
       end
-    end # of is_obstructed?
-  end # end class
+  end # of is_obstructed?
+end # end class

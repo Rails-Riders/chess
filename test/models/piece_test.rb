@@ -2,7 +2,7 @@ require 'test_helper'
 
 class GameTest < ActiveSupport::TestCase
 
-test "detect illegal destination that's not horizontal, vertical, or diagonal" do
+  test "detect illegal destination that's not horizontal, vertical, or diagonal" do
     game = Game.create
 
     white_queen = game.pieces.find_by(:color => 1, :type => Queen)
@@ -275,6 +275,6 @@ test "detect illegal destination that's not horizontal, vertical, or diagonal" d
     actual = white_queen.is_obstructed?(7, 1)
 
     assert_equal expected, actual
-    end
+  end
 
 end
