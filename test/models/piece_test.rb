@@ -1,3 +1,7 @@
+require 'test_helper'
+
+class GameTest < ActiveSupport::TestCase
+
 test "detect illegal destination that's not horizontal, vertical, or diagonal" do
     game = Game.create
 
@@ -272,3 +276,5 @@ test "detect illegal destination that's not horizontal, vertical, or diagonal" d
 
     assert_equal expected, actual
     end
+
+end
