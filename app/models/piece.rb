@@ -80,3 +80,4 @@ class Piece < ActiveRecord::Base
       end
   end # of is_obstructed?
 end # end class
+
