@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class GameTest < ActiveSupport::TestCase
+class PieceTest < ActiveSupport::TestCase
 
   test "detect illegal destination that's not horizontal, vertical, or diagonal" do
     game = Game.create
@@ -276,5 +276,15 @@ class GameTest < ActiveSupport::TestCase
 
     assert_equal expected, actual
   end
+
+  test "valid knight move" do
+    knight = Piece.create(:type => 'Knight', :x_position => 2, :y_position => 6)
+    
+    expected = true
+    #test first vertical north east move
+    actual = knight.valid_move?(3, 6)
+    assert_equal expected, actual
+  end
+
 
 end
