@@ -1,3 +1,27 @@
 // Place all the styles related to the welcome controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+body {
+	background: url('welcome_chess.png') no-repeat center center fixed;
+}
+
+.frosty-welcome {
+	background: rgba(0,0,0, 0.5);
+	color: white;
+	margin-top: 20px;
+
+	li {
+		list-style: none;
+	}
+}
+
+.play-game {
+	margin-left: 10px;
+}
+
+.credit {
+	height: 30px;
+	background: rgba(0,0,0, 0.5);
+	margin-bottom: 0px;
+	color: white;
+}

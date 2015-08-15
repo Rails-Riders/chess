@@ -1,7 +1,10 @@
 class Piece < ActiveRecord::Base
-
-  belongs_to :user
+	belongs_to :user
   belongs_to :game
+
+	def self.types
+		%w(Pawn Rook Knight Bishop Queen King)
+	end
 
   def is_obstructed?(dest_x, dest_y)
       # Get the piece's starting coordinates
@@ -80,4 +83,3 @@ class Piece < ActiveRecord::Base
       end
   end # of is_obstructed?
 end # end class
-
