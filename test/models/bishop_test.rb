@@ -1,10 +1,20 @@
 require 'test_helper'
 
 class BishopTest < ActiveSupport::TestCase
-  test "moves that are valid" do
-    bishop = Piece.create(:type => 'Bishop', :x_position => 5, :y_position => 5)
+  test "moves that are valid diagonals" do
+    game = Game.create
 
-    # Assume is_obstructed? == false (this means there are no obstructions)
+    # Deactivate all pieces except for bishops
+    pieces_to_deactivate = game.pieces.where.not(:type => 'Bishop')
+
+    pieces_to_deactivate.update_all(:active => 0)
+
+    # Find any bishop
+    bishop = game.pieces.find_by(:type => 'Bishop')
+
+    # Update its position so it doesn't run into anything
+    bishop.update(:x_position => 5, :y_position => 5)
+
     expected = true
     
     # Test 1 sqare move northeast
@@ -12,131 +22,114 @@ class BishopTest < ActiveSupport::TestCase
 
     assert_equal expected, actual
 
-    # Test a valid move southeast
+    # Test move far northeast
+    actual = bishop.valid_move?(8, 8)
+
+    assert_equal expected, actual
+
+    # Test 1 sqare move southeast
     actual = bishop.valid_move?(6, 4)
 
     assert_equal expected, actual
 
-    # Test a valid move southwest
+    # Test move far southeast
+    actual = bishop.valid_move?(8, 2)
+
+    assert_equal expected, actual
+
+    # Test 1 sqare move southwest
     actual = bishop.valid_move?(4, 4)
 
     assert_equal expected, actual
 
-    # Test a valid move northwest
+    # Test move far southwest
+    actual = bishop.valid_move?(1, 1)
+
+    assert_equal expected, actual
+
+    # Test 1 sqare move northwest
     actual = bishop.valid_move?(4, 6)
+
+    assert_equal expected, actual
+
+    # Test move far northwest
+    actual = bishop.valid_move?(2, 8)
 
     assert_equal expected, actual
   end
 
-  # test "moves that are invalid" do
-  #   bishop = Piece.create(:type => 'Bishop', :x_position => 5, :y_position => 5)
+  test "moves that are not diagonals" do
+    game = Game.create
 
-  #   # Assume is_obstructed? == false (this means there are no obstructions)
+    # Deactivate all pieces except for bishops
+    pieces_to_deactivate = game.pieces.where.not(:type => 'Bishop')
+
+    pieces_to_deactivate.update_all(:active => 0)
+
+    # Find any bishop
+    bishop = game.pieces.find_by(:type => 'Bishop')
     
-  #   expected = false
+    expected = false
 
-  #   # Test invalid move east
-  #   actual = bishop.valid_move?(7, 5)
+    # Test invalid move east
+    actual = bishop.valid_move?(6, 5)
 
-  #   assert_equal expected, actual
+    assert_equal expected, actual
 
-  #   # Test invalid move west
-  #   actual = bishop.valid_move?(3, 5)
+    # Test invalid move west
+    actual = bishop.valid_move?(4, 5)
 
-  #   assert_equal expected, actual
+    assert_equal expected, actual
 
-  #   # Test invalid move south
-  #   actual = bishop.valid_move?(5, 3)
+    # Test invalid move south
+    actual = bishop.valid_move?(5, 4)
  
-  #   assert_equal expected, actual
+    assert_equal expected, actual
 
-  #   # Test invalid move north
-  #   actual = bishop.valid_move?(5, 7)
+    # Test invalid move north
+    actual = bishop.valid_move?(5, 6)
 
-  #   assert_equal expected, actual
+    assert_equal expected, actual
 
-  #   # Test invalid move northeast
-  #   actual = bishop.valid_move?(7, 7)
+    #--------------------------------------------------
+    # Tests for edge cases:
 
-  #   assert_equal expected, actual
+    # Test invalid non-move where the params match the piece's current location
+    actual = bishop.valid_move?(5, 5)
 
-  #   # Test invalid move southeast
-  #   actual = bishop.valid_move?(7, 3)
+    assert_equal expected, actual
 
-  #   assert_equal expected, actual
+    # Test invalid move northeast ouside the chessboard
+    actual = bishop.valid_move?(9, 9)
 
-  #   # Test invalid move southwest
-  #   actual = bishop.valid_move?(3, 3)
+    assert_equal expected, actual
 
-  #   assert_equal expected, actual
+    # Test invalid move southeast ouside the chessboard
+    actual = bishop.valid_move?(9, 1)
 
-  #   # Test invalid move northwest
-  #   actual = bishop.valid_move?(3, 7)
+    assert_equal expected, actual
 
-  #   assert_equal expected, actual
+    # Test invalid move soutwest ouside the chessboard
+    actual = bishop.valid_move?(0, 0)
 
-  #   #--------------------------------------------------
-  #   # Tests for edge cases:
+    assert_equal expected, actual
 
-  #   # Test invalid non-move where the params match the piece's current location
-  #   actual = bishop.valid_move?(5, 5)
+    # Test invalid move northwest ouside the chessboard
+    actual = bishop.valid_move?(1, 9)
 
-  #   assert_equal expected, actual
+    assert_equal expected, actual
+  end
 
-  #   # Test invalid move east ouside the chessboard
-  #   bishop.update(:x_position => 8, :y_position => 5)
+  test "ensure obstructions are detected" do
+    game = Game.create
 
-  #   actual = bishop.valid_move?(9, 5)
+    bk_sq_white_bishop = game.pieces.find_by(:x_position => 3, :y_position => 1)
 
-  #   assert_equal expected, actual
+    expected = false
 
-  #   # Test invalid move south ouside the chessboard
-  #   bishop.update(:x_position => 5, :y_position => 1)
+    # Give this bishop a destination on a diagonal path obstructed by a pawn
+    actual = bk_sq_white_bishop.valid_move?(5, 3)
 
-  #   actual = bishop.valid_move?(5, 0)
-
-  #   assert_equal expected, actual
-
-  #   # Test invalid move west ouside the chessboard
-  #   bishop.update(:x_position => 1, :y_position => 5)
-
-  #   actual = bishop.valid_move?(0, 5)
-
-  #   assert_equal expected, actual
-
-  #   # Test invalid move north ouside the chessboard
-  #   bishop.update(:x_position => 5, :y_position => 8)
-
-  #   actual = bishop.valid_move?(5, 9)
-
-  #   assert_equal expected, actual
-
-  #   # Test invalid move northeast ouside the chessboard
-  #   bishop.update(:x_position => 8, :y_position => 8)
-
-  #   actual = bishop.valid_move?(9, 9)
-
-  #   assert_equal expected, actual
-
-  #   # Test invalid move southeast ouside the chessboard
-  #   bishop.update(:x_position => 8, :y_position => 1)
-
-  #   actual = bishop.valid_move?(9, 0)
-
-  #   assert_equal expected, actual
-
-  #   # Test invalid move southwest ouside the chessboard
-  #   bishop.update(:x_position => 1, :y_position => 1)
-
-  #   actual = bishop.valid_move?(0, 0)
-
-  #   assert_equal expected, actual
-
-  #   # Test invalid move northeast ouside the chessboard
-  #   bishop.update(:x_position => 1, :y_position => 8)
-
-  #   actual = bishop.valid_move?(0, 9)
-
-  #   assert_equal expected, actual
-  # end
+    assert_equal expected, actual
+  end
 end

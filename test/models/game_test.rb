@@ -1,6 +1,5 @@
 require 'test_helper'
 
-
 class GameTest < ActiveSupport::TestCase
   test "number of pawns" do
     game = Game.create
