@@ -1,5 +1,5 @@
 class Game < ActiveRecord::Base
-	belongs_to :user
+  belongs_to :user
   has_many :pieces
   
   after_create :populate_board!
