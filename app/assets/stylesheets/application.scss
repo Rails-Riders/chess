@@ -13,3 +13,11 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+.hilite {
+  background: rgba(255, 230, 0, 0.5);
+  padding: 3px 2px;
+  margin: -2px -2px;
+  line-height: 1.7;
+  display: inline-block;
+}
