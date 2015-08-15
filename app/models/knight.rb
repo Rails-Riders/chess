@@ -1,11 +1,15 @@
 class Knight < Piece
 
   def valid_move?(new_x, new_y)
-    x_move = (x_position - new_x).abs
-    y_move = (y_position - new_y).abs
+    false if x_position == new_x
+    false if y_position == new_y
+    right_move?(new_x, new_y)
+  end
 
-    (x_position == 2 && y_position == 1) || (x_position == 1 && y_position == 2)
+  private
 
+  def right_move?(new_x, new_y)
+    (x_position - new_x).abs + (y_position - new_y).abs == 3
   end
 
 end

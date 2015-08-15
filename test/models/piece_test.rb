@@ -277,14 +277,6 @@ class PieceTest < ActiveSupport::TestCase
     assert_equal expected, actual
   end
 
-  test "valid knight move" do
-    knight = Piece.create(:type => 'Knight', :x_position => 2, :y_position => 6)
-    
-    expected = true
-    #test first vertical north east move
-    actual = knight.valid_move?(3, 6)
-    assert_equal expected, actual
-  end
-
+  
 
 end
