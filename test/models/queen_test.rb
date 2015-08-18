@@ -58,78 +58,148 @@ class QueenTest < ActiveSupport::TestCase
     assert_equal expected, actual
   end
 
-  # test "moves that are not diagonals" do
-  #   game = Game.create
+  test "moves that are valid on a horitonzal or vertical path" do
+    game = Game.create
 
-  #   # Deactivate all pieces except for queens
-  #   pieces_to_deactivate = game.pieces.where.not(:type => 'Queen')
+    # Deactivate all pieces except for queens
+    pieces_to_deactivate = game.pieces.where.not(:type => 'Queen')
 
-  #   pieces_to_deactivate.update_all(:active => 0)
+    pieces_to_deactivate.update_all(:active => 0)
 
-  #   # Find any queen
-  #   queen = game.pieces.find_by(:type => 'Queen')
+    # Find any queen
+    queen = game.pieces.find_by(:type => 'Queen')
     
-  #   expected = false
+    # Update its position so it doesn't run into anything
+    queen.update(:x_position => 5, :y_position => 5)
 
-  #   # Test invalid move east
-  #   actual = queen.valid_move?(6, 5)
+    expected = true
 
-  #   assert_equal expected, actual
+    # Test 1 sqare move east
+    actual = queen.valid_move?(6, 5)
 
-  #   # Test invalid move west
-  #   actual = queen.valid_move?(4, 5)
+    assert_equal expected, actual
 
-  #   assert_equal expected, actual
+    # Test move far east
+    actual = queen.valid_move?(8, 5)
 
-  #   # Test invalid move south
-  #   actual = queen.valid_move?(5, 4)
+    assert_equal expected, actual
+
+    # Test 1 sqare move west
+    actual = queen.valid_move?(4, 5)
+
+    assert_equal expected, actual
+
+    # Test move far west
+    actual = queen.valid_move?(1, 5)
+
+    assert_equal expected, actual
+
+    # Test 1 sqare move south
+    actual = queen.valid_move?(5, 4)
  
-  #   assert_equal expected, actual
+    assert_equal expected, actual
 
-  #   # Test invalid move north
-  #   actual = queen.valid_move?(5, 6)
+    # Test move far south
+    actual = queen.valid_move?(5, 1)
 
-  #   assert_equal expected, actual
+    assert_equal expected, actual
 
-  #   #--------------------------------------------------
-  #   # Tests for edge cases:
+    # Test 1 sqare move north
+    actual = queen.valid_move?(5, 6)
 
-  #   # Test invalid non-move where the params match the piece's current location
-  #   actual = queen.valid_move?(5, 5)
+    assert_equal expected, actual
 
-  #   assert_equal expected, actual
+    # Test move far north
+    actual = queen.valid_move?(5, 8)
 
-  #   # Test invalid move northeast ouside the chessboard
-  #   actual = queen.valid_move?(9, 9)
+    assert_equal expected, actual
+  end
 
-  #   assert_equal expected, actual
+  test "moves that are invalid" do
+    game = Game.create
 
-  #   # Test invalid move southeast ouside the chessboard
-  #   actual = queen.valid_move?(9, 1)
+    # Deactivate all pieces except for queens
+    pieces_to_deactivate = game.pieces.where.not(:type => 'Queen')
 
-  #   assert_equal expected, actual
+    pieces_to_deactivate.update_all(:active => 0)
 
-  #   # Test invalid move soutwest ouside the chessboard
-  #   actual = queen.valid_move?(0, 0)
+    # Find any queen
+    queen = game.pieces.find_by(:type => 'Queen')
+    
+    # Update its position so it doesn't run into anything
+    queen.update(:x_position => 5, :y_position => 5)
 
-  #   assert_equal expected, actual
+    expected = false
 
-  #   # Test invalid move northwest ouside the chessboard
-  #   actual = queen.valid_move?(1, 9)
+    # Test an invalid move
+    actual = queen.valid_move?(4, 3)
 
-  #   assert_equal expected, actual
-  # end
+    assert_equal expected, actual
 
-  # test "ensure obstructions are detected" do
-  #   game = Game.create
+    # Test another invalid move
+    actual = queen.valid_move?(2, 7)
 
-  #   white_queen = game.pieces.find_by(:x_position => 3, :y_position => 1)
+    assert_equal expected, actual
 
-  #   expected = false
+    #--------------------------------------------------
+    # Tests for edge cases:
 
-  #   # Give this queen a destination on a diagonal path obstructed by a pawn
-  #   actual = white_queen.valid_move?(5, 3)
+    # Test invalid non-move where the params match the piece's current location
+    actual = queen.valid_move?(5, 5)
 
-  #   assert_equal expected, actual
-  # end
+    assert_equal expected, actual
+
+    # Test invalid move north ouside the chessboard
+    actual = queen.valid_move?(5, 9)
+
+    assert_equal expected, actual
+
+    # Test invalid move northeast ouside the chessboard
+    actual = queen.valid_move?(9, 9)
+
+    assert_equal expected, actual
+
+    # Test invalid move east ouside the chessboard
+    actual = queen.valid_move?(9, 5)
+
+    assert_equal expected, actual
+
+    # Test invalid move southeast ouside the chessboard
+    actual = queen.valid_move?(9, 1)
+
+    assert_equal expected, actual
+
+    # Test invalid move south ouside the chessboard
+    actual = queen.valid_move?(5, 0)
+
+    assert_equal expected, actual
+
+    # Test invalid move soutwest ouside the chessboard
+    actual = queen.valid_move?(0, 0)
+
+    assert_equal expected, actual
+
+    # Test invalid move west ouside the chessboard
+    actual = queen.valid_move?(0, 5)
+
+    assert_equal expected, actual
+
+    # Test invalid move northwest ouside the chessboard
+    actual = queen.valid_move?(1, 9)
+
+    assert_equal expected, actual
+  end
+
+  test "ensure obstructions are detected" do
+    game = Game.create
+
+    white_queen = game.pieces.find_by(:x_position => 4, :y_position => 1)
+
+    expected = false
+
+    # Give this queen a destination obstructed by a pawn
+    actual = white_queen.valid_move?(4, 3)
+
+    assert_equal expected, actual
+  end
 end

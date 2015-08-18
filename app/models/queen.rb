@@ -10,18 +10,18 @@ class Queen < Piece
     # Guard against obstructions
     return false if is_obstructed?(dest_x, dest_y) == true
 
+    # Get the piece's starting coordinates
+    start_x = self.x_position
+    start_y = self.y_position
+
     # Get the difference between the starting and ending x and y coordinates
     delta_x = (self.x_position - dest_x).abs
     delta_y = (self.y_position - dest_y).abs
-
-    # Ensure the params match a king's moveset of 1 square in any direction
-    # if x_delta < 2 && y_delta < 2
-    #   true
-    # else 
-    #   false
-    # end
     
-    # Ensure the bishop's destination is only on a diagonal path
-    delta_x == delta_y ? true : false
-  end
+    if start_y == dest_y || start_x == dest_x || delta_x == delta_y
+      true
+    else
+      false
+    end
+  end # of valid_move?
 end
