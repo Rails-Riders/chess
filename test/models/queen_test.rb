@@ -140,54 +140,6 @@ class QueenTest < ActiveSupport::TestCase
     actual = queen.valid_move?(2, 7)
 
     assert_equal expected, actual
-
-    #--------------------------------------------------
-    # Tests for edge cases:
-
-    # Test invalid non-move where the params match the piece's current location
-    actual = queen.valid_move?(5, 5)
-
-    assert_equal expected, actual
-
-    # Test invalid move north ouside the chessboard
-    actual = queen.valid_move?(5, 9)
-
-    assert_equal expected, actual
-
-    # Test invalid move northeast ouside the chessboard
-    actual = queen.valid_move?(9, 9)
-
-    assert_equal expected, actual
-
-    # Test invalid move east ouside the chessboard
-    actual = queen.valid_move?(9, 5)
-
-    assert_equal expected, actual
-
-    # Test invalid move southeast ouside the chessboard
-    actual = queen.valid_move?(9, 1)
-
-    assert_equal expected, actual
-
-    # Test invalid move south ouside the chessboard
-    actual = queen.valid_move?(5, 0)
-
-    assert_equal expected, actual
-
-    # Test invalid move soutwest ouside the chessboard
-    actual = queen.valid_move?(0, 0)
-
-    assert_equal expected, actual
-
-    # Test invalid move west ouside the chessboard
-    actual = queen.valid_move?(0, 5)
-
-    assert_equal expected, actual
-
-    # Test invalid move northwest ouside the chessboard
-    actual = queen.valid_move?(1, 9)
-
-    assert_equal expected, actual
   end
 
   test "ensure obstructions are detected" do
