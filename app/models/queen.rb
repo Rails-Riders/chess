@@ -1,23 +1,27 @@
 class Queen < Piece
-  def valid_move?(x_dest, y_dest)
+  def valid_move?(dest_x, dest_y)
     # Guard against a destination matching a piece's current location
-    return false if [x_dest, y_dest] == [self.x_position, self.y_position]
+    return false if [dest_x, dest_y] == [self.x_position, self.y_position]
 
     # Guard against a destination that is outside a chessboard's grid
-    return false if x_dest < 1 || x_dest > 8
-    return false if y_dest < 1 || y_dest > 8
+    return false if dest_x < 1 || dest_x > 8
+    return false if dest_y < 1 || dest_y > 8
     
-    # Get the difference between a piece's current x_position and x_dest
-    x_delta = (self.x_position - x_dest).abs
+    # Guard against obstructions
+    return false if is_obstructed?(dest_x, dest_y) == true
 
-    # Get the difference between a piece's current y_position and y_dest
-    y_delta = (self.y_position - y_dest).abs
+    # Get the difference between the starting and ending x and y coordinates
+    delta_x = (self.x_position - dest_x).abs
+    delta_y = (self.y_position - dest_y).abs
 
     # Ensure the params match a king's moveset of 1 square in any direction
-    if x_delta < 2 && y_delta < 2
-      true
-    else 
-      false
-    end
+    # if x_delta < 2 && y_delta < 2
+    #   true
+    # else 
+    #   false
+    # end
+    
+    # Ensure the bishop's destination is only on a diagonal path
+    delta_x == delta_y ? true : false
   end
 end

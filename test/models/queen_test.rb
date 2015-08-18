@@ -22,40 +22,40 @@ class QueenTest < ActiveSupport::TestCase
 
     assert_equal expected, actual
 
-  #   # Test move far northeast
-  #   actual = queen.valid_move?(8, 8)
+    # Test move far northeast
+    actual = queen.valid_move?(8, 8)
 
-  #   assert_equal expected, actual
+    assert_equal expected, actual
 
-  #   # Test 1 sqare move southeast
-  #   actual = queen.valid_move?(6, 4)
+    # Test 1 sqare move southeast
+    actual = queen.valid_move?(6, 4)
 
-  #   assert_equal expected, actual
+    assert_equal expected, actual
 
-  #   # Test move far southeast
-  #   actual = queen.valid_move?(8, 2)
+    # Test move far southeast
+    actual = queen.valid_move?(8, 2)
 
-  #   assert_equal expected, actual
+    assert_equal expected, actual
 
-  #   # Test 1 sqare move southwest
-  #   actual = queen.valid_move?(4, 4)
+    # Test 1 sqare move southwest
+    actual = queen.valid_move?(4, 4)
 
-  #   assert_equal expected, actual
+    assert_equal expected, actual
 
-  #   # Test move far southwest
-  #   actual = queen.valid_move?(1, 1)
+    # Test move far southwest
+    actual = queen.valid_move?(1, 1)
 
-  #   assert_equal expected, actual
+    assert_equal expected, actual
 
-  #   # Test 1 sqare move northwest
-  #   actual = queen.valid_move?(4, 6)
+    # Test 1 sqare move northwest
+    actual = queen.valid_move?(4, 6)
 
-  #   assert_equal expected, actual
+    assert_equal expected, actual
 
-  #   # Test move far northwest
-  #   actual = queen.valid_move?(2, 8)
+    # Test move far northwest
+    actual = queen.valid_move?(2, 8)
 
-  #   assert_equal expected, actual
+    assert_equal expected, actual
   end
 
   # test "moves that are not diagonals" do
