@@ -6,7 +6,7 @@ class GamesControllerTest < ActionController::TestCase
     @selected_piece = Piece.where(type: "Queen", color: "1")
     @pieces = @game.pieces
     
-    redirect_to :show {controller: :games, id: id}
+    redirect_to :show {controller: :games, id:}
 
     expected = Game.find(params[:id])
 
