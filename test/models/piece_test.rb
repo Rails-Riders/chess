@@ -1,10 +1,6 @@
 require 'test_helper'
 
 class PieceTest < ActiveSupport::TestCase
-<<<<<<< HEAD
-
-=======
->>>>>>> 1addd35f6e912263c9a3516cdcd2a55a0e23a9ff
   test "detect illegal destination that's not horizontal, vertical, or diagonal" do
     game = Game.create
 
@@ -280,11 +276,6 @@ class PieceTest < ActiveSupport::TestCase
     assert_equal expected, actual
   end
 
-<<<<<<< HEAD
-  
-
-end
-=======
   #------------------------------------------------------------------------
   # Tests for capture logic in move_to! function inside piece.rb.
   test "move to a new, unoccupied destination" do
@@ -359,4 +350,3 @@ end
     assert_equal expected, actual
   end
 end
->>>>>>> 1addd35f6e912263c9a3516cdcd2a55a0e23a9ff
