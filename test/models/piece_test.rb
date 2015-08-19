@@ -280,14 +280,14 @@ class PieceTest < ActiveSupport::TestCase
   # Tests for capture logic in move_to! function inside piece.rb.
   test "move to a new, unoccupied destination" do
     # Assume that is_obstructed? and is_valid? give the green light
-    
+
     game = Game.create
-    
+
     # Find the white king
     white_king = game.pieces.find_by(["color = ? AND type = ?", 1, 'King'])
-    
+
     # Then arbitrarily put it near middle of chessboard
-    white_king.update(:x_position => 5, :y_position => 5) 
+    white_king.update(:x_position => 5, :y_position => 5)
 
     # Test when a new destination is unoccupied
     white_king.move_to!(6, 5)
@@ -301,9 +301,9 @@ class PieceTest < ActiveSupport::TestCase
 
   test "move to a new destination that's occupied by a friendly" do
     # Assume that is_obstructed? and is_valid? give the green light
-    
+
     game = Game.create
-    
+
     # Find the white king
     white_king = game.pieces.find_by(:color => 1, :type => 'King')
 
@@ -317,16 +317,16 @@ class PieceTest < ActiveSupport::TestCase
     assert_equal expected, actual
   end
 
-  test "move to a new destination that's occupied by an enemy" do        
+  test "move to a new destination that's occupied by an enemy" do
     game = Game.create
-    
+
     # Find the white king and black king
     white_king = game.pieces.find_by(:color => 1, :type => 'King')
     black_king = game.pieces.find_by(:color => 0, :type => 'King')
 
     # Then arbitrarily put then near each other for an attack scenario
     white_king.update(:x_position => 5, :y_position => 5)
-    black_king.update(:x_position => 4, :y_position => 4) 
+    black_king.update(:x_position => 4, :y_position => 4)
 
     # Make the white piece attack the black piece assuming that is_obstructed?
     # and is_valid? give the green light
