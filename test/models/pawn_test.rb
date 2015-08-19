@@ -125,22 +125,31 @@ class PawnTest < ActiveSupport::TestCase
 	end
 
 	test "check all methods together within valid_move?" do
+
+		pieces_to_remove = @game.pieces.where.not(:type => 'Pawn')
+    pieces_to_remove.update_all(:active => 0)
+
 		# Test first move up 2 but x changes by 1
 		expected = false 
-		actual = @white_pawn.valid_move?(4,2)
+		actual = @white_pawn.valid_move?(2,4)
 
 		assert_equal expected, actual
 
 		# Test 1st move 1 forward but met by obstacle
-		@black_pawn.update(:y_position => 4)
-		actual = @white_pawn.valid_move?(4,1)
+		@black_pawn.update(:y_position => 3)
+		actual = @white_pawn.valid_move?(1,3)
 
 		assert_equal expected, actual
 
 		# Test 1st move 1 forward no obstacles
 		expected = true
+		@black_pawn.update(:active => 0)
 		actual = @white_pawn.valid_move?(1,3)
 
 		assert_equal expected, actual
+
+		# Test 1st move 2 forward no obstacles
+    actual = @white_pawn.valid_move?(1,4)
+    assert_equal expected, actual
 	end
 end

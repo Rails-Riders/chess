@@ -41,10 +41,11 @@ class Pawn < Piece
 	end
 
 	def always_allowed(new_x, new_y)
-		if new_x != self.x_position
+		return true if first_move?(new_y) && (new_x == self.x_position)
+		if (new_x != self.x_position)
 			return false
 		else
-			(new_y - y_position) == 1 ? true : false
+			(new_y - y_position).abs == 1 ? true : false
 		end
 	end
 end
