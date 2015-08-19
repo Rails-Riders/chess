@@ -36,9 +36,9 @@ class Piece < ActiveRecord::Base
     def obstacle?(check_x, check_y)
       game.pieces.exists?(:x_position => check_x,
                           :y_position => check_y,
-                          :active => 1)   
+                          :active => 1)
     end
-    
+
     #--------------------------------------------------
     # Find any obstacles when the destination is on a:
     # - horizontal path
@@ -46,7 +46,7 @@ class Piece < ActiveRecord::Base
       check_x = start_x + increment_x
 
       while check_x - dest_x != 0 do
-        return true if obstacle?(check_x, dest_y) 
+        return true if obstacle?(check_x, dest_y)
 
         check_x += increment_x
       end
@@ -58,7 +58,7 @@ class Piece < ActiveRecord::Base
       check_y = start_y + increment_y
 
       while check_y - dest_y != 0 do
-        return true if obstacle?(dest_x, check_y) 
+        return true if obstacle?(dest_x, check_y)
 
         check_y += increment_y
       end
@@ -68,12 +68,12 @@ class Piece < ActiveRecord::Base
     # - diagonal path
     else
       return "Error: Illegal move" if delta_x != delta_y
-     
+
       check_x = start_x + increment_x
       check_y = start_y + increment_y
 
       while (check_x - dest_x != 0) && (check_y - dest_y != 0) do
-        return true if obstacle?(check_x, check_y) 
+        return true if obstacle?(check_x, check_y)
 
         check_x += increment_x
         check_y += increment_y
@@ -102,6 +102,6 @@ class Piece < ActiveRecord::Base
 
       # Move to the enemy's now vacant position
       self.update(:x_position => new_x, :y_position => new_y)
-    end          
+    end
   end
 end # end class
