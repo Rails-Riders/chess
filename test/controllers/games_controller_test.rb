@@ -1,8 +1,11 @@
 require 'test_helper'
 
 class GamesControllerTest < ActionController::TestCase
-  test "show board for selected game == 1" do 
-    game_id = '1'
-    assert_routing '/games/1', {action: "show", controller: "games", id: game_id}
+  test "show page for game == 1" do
+    @game = Game.create(id: 1)
+    @selected_piece = Piece.where(type: "Queen", color: "1")
+    @pieces = @game.pieces
+
+    assert_generates "games/1", {:controller => 'games', :action => 'show', :id => @game.id}
   end
 end
