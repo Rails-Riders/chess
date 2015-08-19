@@ -6,6 +6,13 @@ class Piece < ActiveRecord::Base
     %w(Pawn Rook Knight Bishop Queen King)
   end
 
+  # This checks the database for a potential obstacle on a single location
+  def obstacle?(check_x, check_y)
+    game.pieces.exists?(:x_position => check_x,
+                        :y_position => check_y,
+                        :active => 1)   
+  end
+
   def is_obstructed?(dest_x, dest_y)
     # Get the piece's starting coordinates
     start_x = self.x_position
@@ -31,14 +38,7 @@ class Piece < ActiveRecord::Base
     else
       increment_y = -1
     end
-
-    # This function checks the database for a potential obstacle
-    def obstacle?(check_x, check_y)
-      game.pieces.exists?(:x_position => check_x,
-                          :y_position => check_y,
-                          :active => 1)   
-    end
-    
+      
     #--------------------------------------------------
     # Find any obstacles when the destination is on a:
     # - horizontal path
@@ -51,7 +51,7 @@ class Piece < ActiveRecord::Base
         check_x += increment_x
       end
 
-      return false
+    return false
     #--------------------------------------------------
     # - vertical path
     elsif start_x == dest_x
