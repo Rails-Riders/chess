@@ -6,7 +6,7 @@ class Piece < ActiveRecord::Base
     %w(Pawn Rook Knight Bishop Queen King)
   end
 
-  # This checks the database for a potential obstacle on a single location
+   # This checks the database for a potential obstacle on a single location
   def obstacle?(check_x, check_y)
     game.pieces.exists?(:x_position => check_x,
                         :y_position => check_y,

@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'pry'
 
 class PawnTest < ActiveSupport::TestCase
 
@@ -13,19 +14,19 @@ class PawnTest < ActiveSupport::TestCase
 		exptected_allowed = true
 
 		# If first move is forward one space
-		actual = @white_pawn.first_move?(3)
+		actual = @white_pawn.move_number_allowed?(3)
 		assert_equal exptected_allowed, actual
 
 		# If first move is forward two spaces
-		actual = @white_pawn.first_move?(4)
+		actual = @white_pawn.move_number_allowed?(4)
 		assert_equal exptected_allowed, actual
 
 		# If first move is forward one space
-		actual = @black_pawn.first_move?(6)
+		actual = @black_pawn.move_number_allowed?(6)
 		assert_equal exptected_allowed, actual
 
 		# If first move is forward two spaces
-		actual = @black_pawn.first_move?(5)
+		actual = @black_pawn.move_number_allowed?(5)
 
 		# Tests for second moves more than one square
 		expected_disallowed = false
@@ -33,12 +34,12 @@ class PawnTest < ActiveSupport::TestCase
 		@white_pawn.update(:y_position => 3)
 		@black_pawn.update(:y_position => 6)
 		# If second move tries to move 2 spaces 
-		actual = @white_pawn.first_move?(5)
+		actual = @white_pawn.move_number_allowed?(5)
 		assert_equal expected_disallowed, actual
  
 
 		# If second move tries to move 2 
-		actual = @black_pawn.first_move?(4)
+		actual = @black_pawn.move_number_allowed?(4)
 		assert_equal expected_disallowed, actual  
 	end
 
@@ -49,13 +50,13 @@ class PawnTest < ActiveSupport::TestCase
  		@white_pawn.update(:x_position => 5, :y_position => 2)
  		@black_pawn.update(:x_position => 5, :y_position => 7)
 
-		expected = true
+		expected = false
 		# Move white pawn backwards
-		actual = @white_pawn.backwards_move?(1)
+		actual = @white_pawn.not_a_backwards_move?(1)
 		assert_equal expected, actual
 
 		# Move black pawn backwards
-		actual = @black_pawn.backwards_move?(8)
+		actual = @black_pawn.not_a_backwards_move?(8)
 		assert_equal expected, actual
 	end
 
@@ -66,13 +67,13 @@ class PawnTest < ActiveSupport::TestCase
  		@white_pawn.update(:x_position => 5, :y_position => 5)
  		@black_pawn.update(:x_position => 5, :y_position => 6)
  		
- 		expected = true
+ 		expected = false
  		# Check for vertical obstacle for white pawn
- 		actual = @white_pawn.vertical_obstacle?(6)
+ 		actual = @white_pawn.no_vertical_obstacle?(6)
  		assert_equal expected, actual
 
  		# Check for vertical obstacle for black pawn
- 		actual = @black_pawn.vertical_obstacle?(5)
+ 		actual = @black_pawn.no_vertical_obstacle?(5)
  		assert_equal expected, actual
 	end
 
@@ -113,13 +114,13 @@ class PawnTest < ActiveSupport::TestCase
 		pieces_to_remove.update_all(:active => 0)
 
 		expected = true 
-		actual = @white_pawn.always_allowed(1,3)
+		actual = @white_pawn.move_number_allowed?(3)
 
 		assert_equal expected, actual
 
 		# Cannot move if change in x
 		expected = false
-		actual = @white_pawn.always_allowed(2,3)
+		actual = @white_pawn.diagonal_move_allowed?(2, 3)
 
 		assert_equal expected, actual
 	end
@@ -137,9 +138,20 @@ class PawnTest < ActiveSupport::TestCase
 
 		# Test 1st move 1 forward but met by obstacle
 		@black_pawn.update(:y_position => 3)
+		#binding.pry
 		actual = @white_pawn.valid_move?(1,3)
 
 		assert_equal expected, actual
+
+		# Test 1st move 2 forward but met by obstacle before destination
+    actual = @white_pawn.valid_move?(1, 4)
+    assert_equal expected, actual
+
+    # Test 1st move 2 forward with obstacle in destination
+    @black_pawn.update(:y_position => 4)
+
+    actual = @white_pawn.valid_move?(1,4)
+    assert_equal expected, actual
 
 		# Test 1st move 1 forward no obstacles
 		expected = true
