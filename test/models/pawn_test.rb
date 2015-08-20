@@ -151,5 +151,74 @@ class PawnTest < ActiveSupport::TestCase
 		# Test 1st move 2 forward no obstacles
     actual = @white_pawn.valid_move?(1,4)
     assert_equal expected, actual
+  end
+
+  test "check all capturing moves of a friendly with valid_move?" do
+
+	  # Black pawn cannot capture a friendly from the southeast
+	  black_pawn_2 = @game.pieces.find_by(:type => "Pawn", :x_position => 7, :y_position => 7, :color => 0)
+	  black_pawn_2.update(:y_position => 5)
+	  
+	  expected = false
+	  actual = @black_pawn.valid_move?(7, 5)
+	  
+	  assert_equal expected, actual
+	  
+	  # Black pawn cannot capture a friendly from the southwest
+	  black_pawn_2.update(:x_position => 5)
+	  
+	  actual = @black_pawn.valid_move?(5, 5)
+	  
+	  assert_equal expected, actual
+	  
+	  # White pawn cannot capture a northeast friendly
+	  # Deactivate all black pieces
+	  pieces_to_remove = @game.pieces.where(:color => 0)
+	  pieces_to_remove.update_all(:active => 0)
+	  
+	  white_pawn_2 = @game.pieces.find_by(:type => "Pawn", :x_position => 5, :y_position => 2, :color => 1)
+	  white_pawn_2.update(:y_position => 5)
+	  
+	  expected = false
+	  actual = @white_pawn.valid_move?(5, 5)
+	  
+	  assert_equal expected, actual
+	  
+	  # White pawn cannot capture a northwest friendly
+	  white_pawn_2.update(:x_position => 3)
+	  
+	  actual = @white_pawn.valid_move?(3, 5)
+	  
+	  assert_equal expected, actual
 	end
+
+	test "check all capturing moves of an enemy with valid_move?" do
+
+    @white_pawn.update(:x_position => 4, :y_position => 4)
+    @black_pawn.update(:x_position => 5, :y_position => 5)
+    #binding.pry
+    expected = true
+    # White pawn can capture a northeast enemy
+    actual = @white_pawn.valid_move?(5, 5)
+    assert_equal expected, actual
+    # # White pawn can capture a northwest enemy
+    @black_pawn.update(:x_position => 3)
+    
+    actual = @white_pawn.valid_move?(3, 5)
+   
+    assert_equal expected, actual
+    # Black pawn can capture a southwest enemy
+    @black_pawn.update(:x_position => 6, :y_position => 6)
+    @white_pawn.update(:x_position => 5, :y_position => 5)
+    
+    actual = @black_pawn.valid_move?(5, 5)
+    
+    assert_equal expected, actual
+    #Black pawn can capture a southeast enemy
+    @white_pawn.update(:x_position => 7, :y_position => 5)
+    
+    actual = @black_pawn.valid_move?(7, 5)
+    
+    assert_equal expected, actual
+  end
 end
