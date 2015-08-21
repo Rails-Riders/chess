@@ -137,9 +137,6 @@ class PieceTest < ActiveSupport::TestCase
     # Test a destination far south
     actual = white_queen.is_obstructed?(4, 1)
 
-    # Chris's added test
-    actual = white_queen.is_obstructed?(4,2)
-
     assert_equal expected, actual
   end
 

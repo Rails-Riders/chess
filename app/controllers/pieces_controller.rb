@@ -16,7 +16,7 @@ class PiecesController < ApplicationController
 	private
 
 	def select_pc
-		Piece.find(params[:id])
+		@select_pc = Piece.find(params[:id])
 	end
 
 	def piece_params

@@ -138,24 +138,25 @@ class PawnTest < ActiveSupport::TestCase
 
 		# Test 1st move 1 forward but met by obstacle
 		@black_pawn.update(:y_position => 3)
-		#binding.pry
 		actual = @white_pawn.valid_move?(1,3)
 
 		assert_equal expected, actual
 
 		# Test 1st move 2 forward but met by obstacle before destination
     actual = @white_pawn.valid_move?(1, 4)
+
     assert_equal expected, actual
 
     # Test 1st move 2 forward with obstacle in destination
     @black_pawn.update(:y_position => 4)
-
     actual = @white_pawn.valid_move?(1,4)
+
     assert_equal expected, actual
 
 		# Test 1st move 1 forward no obstacles
 		expected = true
 		@black_pawn.update(:active => 0)
+
 		actual = @white_pawn.valid_move?(1,3)
 
 		assert_equal expected, actual
@@ -172,6 +173,7 @@ class PawnTest < ActiveSupport::TestCase
 	  black_pawn_2.update(:y_position => 5)
 	  
 	  expected = false
+
 	  actual = @black_pawn.valid_move?(7, 5)
 	  
 	  assert_equal expected, actual
@@ -208,7 +210,6 @@ class PawnTest < ActiveSupport::TestCase
 
     @white_pawn.update(:x_position => 4, :y_position => 4)
     @black_pawn.update(:x_position => 5, :y_position => 5)
-    #binding.pry
     expected = true
     # White pawn can capture a northeast enemy
     actual = @white_pawn.valid_move?(5, 5)
