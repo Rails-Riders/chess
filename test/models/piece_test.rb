@@ -279,6 +279,8 @@ class PieceTest < ActiveSupport::TestCase
   #------------------------------------------------------------------------
   # Tests for capture logic in move_to! function inside piece.rb.
   test "move to a new, unoccupied destination" do
+    # Assume that is_obstructed? and is_valid? give the green light
+
     game = Game.create
 
     # Find the white king
@@ -297,7 +299,9 @@ class PieceTest < ActiveSupport::TestCase
     assert_equal expected, actual
   end
 
-  test "invalidate a move to a new destination that's occupied by a friendly" do
+  test "move to a new destination that's occupied by a friendly" do
+    # Assume that is_obstructed? and is_valid? give the green light
+
     game = Game.create
 
     # Find the white king
@@ -320,7 +324,7 @@ class PieceTest < ActiveSupport::TestCase
     white_king = game.pieces.find_by(:color => 1, :type => 'King')
     black_king = game.pieces.find_by(:color => 0, :type => 'King')
 
-    # Then arbitrarily put them near each other for an attack scenario
+    # Then arbitrarily put then near each other for an attack scenario
     white_king.update(:x_position => 5, :y_position => 5)
     black_king.update(:x_position => 4, :y_position => 4)
 
@@ -343,27 +347,6 @@ class PieceTest < ActiveSupport::TestCase
     actual = black_king.active
 
     # Assert the black piece's new :active status as captured (or 0)
-    assert_equal expected, actual
-  end
-
-  test "invalidate an attack on an enemy while being blocked" do
-    game = Game.create
-
-    # Find the white queen
-    white_queen = game.pieces.find_by(:color => 1, :type => 'Queen')
-
-    # Make the white_queen attack a piece while being blocked by a friendly
-    actual = white_queen.move_to!(4, 7)
-
-    assert_equal expected, actual
-
-    # Deactivate the friendly blocking pawn
-    blocking_pawn = game.pieces.find_by(:type => 'Pawn', :x_position => 4)
-    blocking_pawn.update(:active => 0)
-
-    # Make the white_queen attack an enemy while being blocked by another enemy
-    actual = white_queen.move_to!(4, 8)
-
     assert_equal expected, actual
   end
 end

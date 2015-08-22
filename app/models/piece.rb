@@ -84,9 +84,6 @@ class Piece < ActiveRecord::Base
   end # of is_obstructed?
 
   def move_to!(new_x, new_y)
-    # Guard against an invalid move or obstruction
-    return false if self.valid_move?(new_x, new_y) == false
-
     friendly_color = self.color
 
     friend_or_foe = game.pieces.find_by(:x_position => new_x,
