@@ -9,7 +9,8 @@ class PiecesController < ApplicationController
 	def update
 		row = params[:y_position]
 		col = params[:x_position]
-		@moved_pc = select_pc.update_attributes(y_position: row, x_position: col)
+		@moved_pc = select_pc.update_attributes(
+			y_position: row, x_position: col)
 		redirect_to game_path(select_pc.game.id)
 	end
 
@@ -20,6 +21,7 @@ class PiecesController < ApplicationController
 	end
 
 	def piece_params
-		params.require(:piece).permit(:type, :game_id, :x_position, :y_position, :color)
+		params.require(:piece).permit(
+			:type, :game_id, :x_position, :y_position, :color)
 	end
 end

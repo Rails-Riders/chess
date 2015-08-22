@@ -1,11 +1,14 @@
 class Pawn < Piece
 
 	def valid_move?(new_x, new_y)
-		[move_number_allowed?(new_y), no_vertical_obstacle?(new_y), not_a_backwards_move?(new_y), diagonal_move_allowed?(new_x, new_y)].all?
+		[move_number_allowed?(new_y), 
+			no_vertical_obstacle?(new_y), 
+			not_a_backwards_move?(new_y), 
+			diagonal_move_allowed?(new_x, new_y)].all?
 	end
 
 	def move_number_allowed?(new_y)
-		move_number(new_y) == 1 || (move_number(new_y) == 2 && first_move?(new_y))
+		move_number(new_y) == 1 || move_number(new_y) == 2 && first_move?(new_y)
 	end
 
 	def move_number(new_y)
@@ -17,7 +20,11 @@ class Pawn < Piece
   end
 
 	def no_vertical_obstacle?(new_y)
-		move_number(new_y) == 2 ? !is_obstructed?(x_position, new_y) && no_vertical_adjacent_obstacle?(x_position, new_y) : (no_vertical_adjacent_obstacle?(x_position, new_y))
+		if move_number(new_y) == 2 
+			!is_obstructed?(x_position, new_y) && no_vertical_adjacent_obstacle?(x_position, new_y) 
+		else
+			(no_vertical_adjacent_obstacle?(x_position, new_y))
+		end
 	end
 
 	def no_vertical_adjacent_obstacle?(x_position, new_y)
@@ -30,7 +37,11 @@ class Pawn < Piece
 
 	def diagonal_move_allowed?(new_x, new_y)
 		return true if new_x == x_position
-		(new_x - x_position).abs == 1 && (new_y - y_position).abs == 1 ? capture_diagonally?(new_x, new_y) : false
+		if (new_x - x_position).abs == 1 && (new_y - y_position).abs == 1 
+			capture_diagonally?(new_x, new_y) 
+		else
+			false
+		end
 	end
 
 	def capture_diagonally?(new_x, new_y)
