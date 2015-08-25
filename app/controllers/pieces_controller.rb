@@ -1,7 +1,7 @@
 require 'pry'
 class PiecesController < ApplicationController
 	before_action :select_pc, :only => [:show, :update]
-	before_action :only => :update do 
+	before_action :only => :update do
 		valid_move?(:x_position, :y_position)
 	end
 
@@ -32,6 +32,7 @@ class PiecesController < ApplicationController
 	end
 
 	def piece_params
-		params.require(:piece).permit(:type, :game_id, :x_position, :y_position, :color)
+		params.require(:piece).permit(
+			:type, :game_id, :x_position, :y_position, :color)
 	end
 end
