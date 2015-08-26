@@ -7,11 +7,11 @@ class PiecesController < ApplicationController
 	end
 
 	def update
-		row = params[:y_position]
-		col = params[:x_position]
+		row = params[:y_position].to_i
+		col = params[:x_position].to_i
 
 		# @moved_pc = select_pc.update_attributes(y_position: row, x_position: col)
-		@moved_pc = @select_pc.move_to!(col, row)
+		@moved_pc = select_pc.move_to!(col, row)
 
 		redirect_to game_path(select_pc.game.id)
 	end
