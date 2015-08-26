@@ -6,6 +6,7 @@ class Rook < Piece
 
 		return false if (dest_x < self.x_position || dest_x > self.x_position) && (dest_y < self.y_position || dest_y > self.y_position)
 
+		return true
 	end
 
 end
