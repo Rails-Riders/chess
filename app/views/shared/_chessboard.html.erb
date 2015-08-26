@@ -10,14 +10,11 @@
           <% 1.upto(8) do |col| %>
             <td class= "<%= board_squares(row) %>">
               <%= link_to '', piece_path(id: @select_pc.id, x_position: col, y_position: row), :class => square_link(@select_pc), method: :put %>
-                <!--div class="squares"-->
                   <%  @pieces.detect do |piece| %>
                     <% if piece.x_position == col && piece.y_position == row %>
                       <%= link_to piece_color(piece), piece_path(piece.id), :class => hilite(piece) %>
                     <% end %>
-                  <% end %>
-                <!--/div-->
-               <%# end %>                
+                  <% end %>                
             </td>
           <% end %>
         </tr>
