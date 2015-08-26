@@ -22,7 +22,7 @@
   border: 1px solid; 
     width: 4em; 
     height: 4em;
-
+    position: relative;
 }
 
 .chess-board .light { 
@@ -36,6 +36,15 @@
 .squares {
   height: 4em;
   width: 4em;
+}
+
+a.square-link {
+  display: block;
+  height: 4em;
+  width: 4em;
+  position: absolute;
+  top: 0px;
+  left: 0px;
 }
 
 
