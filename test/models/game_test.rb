@@ -157,12 +157,12 @@ class GameTest < ActiveSupport::TestCase
     assert_equal 2, game_queens
   end
 
-  test "show page for game == 1" do
-    game = Game.create(id: 1)
-    puts game.inspect
-    # @selected_piece = Piece.where(type: "Queen", color: "1")
-    # @pieces = @game.pieces
+  # test "show page for game == 1" do
+  #   game = Game.create(id: 1)
+  #   puts game.inspect
+  #   # @selected_piece = Piece.where(type: "Queen", color: "1")
+  #   # @pieces = @game.pieces
 
-    assert_generates "/games/1", {:controller => 'games', :action => 'show', :id => 1}
-  end
+  #   assert_generates "/game/1", {:controller => 'game', :action => 'show', :id => 1}
+  # end
 end

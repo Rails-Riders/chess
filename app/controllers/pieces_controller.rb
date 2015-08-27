@@ -23,6 +23,7 @@ class PiecesController < ApplicationController
 	def validate_move(x_position, y_position)
 		row = params[:y_position].to_i
 		col = params[:x_position].to_i
+
 		if !select_pc.valid_move?(col, row)
 			flash[:alert] = "That move is not allowed!  Please choose your piece and try again."
 			redirect_to game_path(select_pc.game.id)
@@ -33,9 +34,9 @@ class PiecesController < ApplicationController
 		@select_pc = Piece.find(params[:id])
 	end
 
-	def piece_params
-		params.require(:piece).permit(
-			:type, :game_id, :x_position, :y_position, :color)
-	end
+	# def piece_params
+	# 	params.require(:piece).permit(
+	# 		:type, :game_id, :x_position, :y_position, :color)
+	# end
 end
 

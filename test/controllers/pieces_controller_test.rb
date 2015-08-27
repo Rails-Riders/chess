@@ -39,7 +39,13 @@ class PiecesControllerTest < ActionController::TestCase
 
     expected = [1, 3, 1]
 
-    actual = [white_pawn.x_position, white_pawn.y_position, ally.active]
+    actual = [white_pawn.x_position, white_pawn.y_position, white_pawn.active]
+
+    assert_equal expected, actual
+
+    expected = [1, 4, 1]
+
+    actual = [ally.x_position, ally.y_position, ally.active]
 
     assert_equal expected, actual
 
@@ -47,10 +53,16 @@ class PiecesControllerTest < ActionController::TestCase
     # Player decides to move the pawn to a square occupied by an enemy:
     enemy.update(:x_position => 2, :y_position => 4)
 
+    puts enemy.inspect
+    puts white_pawn.inspect
+
     put :update, :id => white_pawn.id, :x_position => 2, :y_position => 4
 
     white_pawn.reload
     enemy.reload
+
+    puts enemy.inspect
+    puts white_pawn.inspect
 
     expected = [2, 4, 0]
 
@@ -58,7 +70,6 @@ class PiecesControllerTest < ActionController::TestCase
 
     assert_equal expected, actual
   end
-
   #test "selected piece is allowed to move if valid_move returns true" do
   #	@game = Game.create
   #	@piece = Piece.find_by(type: "Pawn", color: 1, x_position: 4, y_position: 2)
