@@ -30,9 +30,4 @@ class PiecesController < ApplicationController
 	def select_pc
 		@select_pc = Piece.find(params[:id])
 	end
-
-	def piece_params
-		params.require(:piece).permit(
-			:type, :game_id, :x_position, :y_position, :color)
-	end
 end
