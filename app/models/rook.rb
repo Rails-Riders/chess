@@ -2,9 +2,9 @@ class Rook < Piece
 
 	def valid_move?(dest_x, dest_y)
 
-		#can not move to currently occupied square
+		#a move can not be a non-move
     	return false if dest_x == self.x_position && dest_y == self.y_position
-		
+
 		#no obstructions allowed
 		return false if is_obstructed?(dest_x, dest_y) == true
 
