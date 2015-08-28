@@ -349,7 +349,7 @@ class PieceTest < ActiveSupport::TestCase
     assert_equal expected, actual
   end
 
-  test "invalid move off of the board" do 
+  test "invalid move off of the board" do
     game = Game.create
 
     # Remove all pieces except Queen
@@ -379,7 +379,7 @@ class PieceTest < ActiveSupport::TestCase
     assert_equal expected, actual
   end
 
-  test "invalid attempt - choosing current location" do 
+  test "invalid attempt - choosing current location" do
     game = Game.create
     white_pawn = game.pieces.find_by(
       :type => "Pawn", :color => 1, :x_position => 1, :y_position => 2)
@@ -391,5 +391,6 @@ class PieceTest < ActiveSupport::TestCase
   end
 
 #----------------------- Test turn-logic -------------------------------------
-   
+
+
 end

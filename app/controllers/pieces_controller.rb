@@ -23,7 +23,6 @@ class PiecesController < ApplicationController
 
   private
 
-
 	def not_my_turn?
 		if @game.player_turn != current_player.color
 			flash[:alert] = "Be patient...it's not yet your turn."
