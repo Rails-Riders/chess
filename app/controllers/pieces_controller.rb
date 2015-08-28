@@ -1,4 +1,3 @@
-require 'pry'
 class PiecesController < ApplicationController
 	before_action :select_pc, :only => [:show, :update]
 
@@ -7,11 +6,15 @@ class PiecesController < ApplicationController
 	end
 
 	def update
-		row = params[:y_position]
-		col = params[:x_position]
-		@moved_pc = select_pc.update_attributes(
-			y_position: row, x_position: col)
-		redirect_to game_path(select_pc.game.id)
+		row, col = params[:y_position].to_i,
+		           params[:x_position].to_i
+		if moved = select_pc.valid_move?(col, row)
+		  select_pc.update_attributes(y_position: row, 
+		  	                          x_position: col)
+		end
+
+		render json: select_pc.to_json, 
+		       status: moved ? :ok : 422
 	end
 
 	private
