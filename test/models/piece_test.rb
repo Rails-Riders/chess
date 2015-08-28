@@ -299,24 +299,6 @@ class PieceTest < ActiveSupport::TestCase
     assert_equal expected, actual
   end
 
-  test "move to a new destination that's occupied by a friendly" do
-    # Assume that is_obstructed? and is_valid? give the green light
-
-    game = Game.create
-
-    # Find the white king
-    white_king = game.pieces.find_by(:color => 1, :type => 'King')
-
-    # Test when a new destination is occupied by a friendly
-    white_king.move_to!(5, 2)
-
-    expected = [5, 1]
-
-    actual = [white_king.x_position, white_king.y_position]
-
-    assert_equal expected, actual
-  end
-
   test "move to a new destination that's occupied by an enemy" do
     game = Game.create
 
@@ -347,6 +329,64 @@ class PieceTest < ActiveSupport::TestCase
     actual = black_king.active
 
     # Assert the black piece's new :active status as captured (or 0)
+    assert_equal expected, actual
+  end
+#--------------------Test nil_move? logic-----------------------------------
+  test "invalid move to a new destination that's occupied by a friendly" do
+    # Corrected this test so that this move cannot take place
+    game = Game.create
+
+    # Find the white king
+    white_king = game.pieces.find_by(:color => 1, :type => 'King', :x_position => 5, :y_position => 1)
+    obstacle = game.pieces.find_by(:color => 1, :type => "Pawn")
+    obstacle.update_attributes(:x_position => 5, :y_position => 2)
+
+    # Test a destination that is occupied by a friendly
+    actual = white_king.nil_move?(5, 2)
+
+    expected = true
+
+    assert_equal expected, actual
+  end
+
+  test "invalid move off of the board" do 
+    game = Game.create
+
+    # Remove all pieces except Queen
+    pieces_to_deactivate = game.pieces.where.not(:type => "Queen")
+    pieces_to_deactivate.update_all(:active => 0)
+
+    white_queen = game.pieces.find_by(:color => 1, :type => 'Queen')
+
+    expected = true
+    # Test position far north
+    actual = white_queen.nil_move?(4, 9)
+
+    assert_equal expected, actual
+
+    # Test position far east
+    actual = white_queen.nil_move?(9, 1)
+
+    assert_equal expected, actual
+
+    # Test position far west
+    actual = white_queen.nil_move?(0, 1)
+
+    assert_equal expected, actual
+
+    # Test position south
+    actual = white_queen.nil_move?(4, 0)
+    assert_equal expected, actual
+  end
+
+  test "invalid attempt - choosing current location" do 
+    game = Game.create
+    white_pawn = game.pieces.find_by(
+      :type => "Pawn", :color => 1, :x_position => 1, :y_position => 2)
+
+    actual = white_pawn.nil_move?(1,2)
+    expected = true
+
     assert_equal expected, actual
   end
 end
