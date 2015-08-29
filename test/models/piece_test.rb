@@ -319,6 +319,7 @@ class PieceTest < ActiveSupport::TestCase
 
   test "move to a new destination that's occupied by an enemy" do
     game = Game.create
+    game2 = Game.create
 
     # Find the white king and black king
     white_king = game.pieces.find_by(:color => 1, :type => 'King')

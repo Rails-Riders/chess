@@ -16,7 +16,7 @@ class QueenTest < ActiveSupport::TestCase
     queen.update(:x_position => 5, :y_position => 5)
 
     expected = true
-    
+
     # Test 1 sqare move northeast
     actual = queen.valid_move?(6, 6)
 
@@ -68,7 +68,7 @@ class QueenTest < ActiveSupport::TestCase
 
     # Find any queen
     queen = game.pieces.find_by(:type => 'Queen')
-    
+
     # Update its position so it doesn't run into anything
     queen.update(:x_position => 5, :y_position => 5)
 
@@ -96,7 +96,7 @@ class QueenTest < ActiveSupport::TestCase
 
     # Test 1 sqare move south
     actual = queen.valid_move?(5, 4)
- 
+
     assert_equal expected, actual
 
     # Test move far south
@@ -125,7 +125,7 @@ class QueenTest < ActiveSupport::TestCase
 
     # Find any queen
     queen = game.pieces.find_by(:type => 'Queen')
-    
+
     # Update its position so it doesn't run into anything
     queen.update(:x_position => 5, :y_position => 5)
 
@@ -151,6 +151,11 @@ class QueenTest < ActiveSupport::TestCase
 
     # Give this queen a destination obstructed by a pawn
     actual = white_queen.valid_move?(4, 3)
+
+    assert_equal expected, actual
+
+    # Give this queen an invalid destination obstructed by a pawn
+    actual = white_queen.valid_move?(5, 3)
 
     assert_equal expected, actual
   end
