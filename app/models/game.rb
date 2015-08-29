@@ -73,7 +73,6 @@ class Game < ActiveRecord::Base
       y2 = 7
       color = 0
     end
-
   end
 
   def in_check?(color)
@@ -94,4 +93,3 @@ class Game < ActiveRecord::Base
     piece_moving = pieces.find_by(id: piece_id)
     piece_moving == @king ? (@king_position = col, row) : (@king_position = @king.x_position, @king.y_position)
   end
-end
