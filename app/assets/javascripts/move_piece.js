@@ -8,8 +8,11 @@ $(document).ready(function() {
 
   $( "td" ).droppable({
     drop: function( event, ui ) { 
+      //these are where the piece is moving to
       var startRow  = $(this).data("square-row");
       var startCol  = $(this).data("square-col");
+
+      //these are the draggable pieces
       var pieceId   = $(ui.draggable).data("piece-id");
       var newRow    = $(ui.draggable).data("piece-start-row");
       var newCol    = $(ui.draggable).data("piece-start-col");
@@ -27,7 +30,7 @@ $(document).ready(function() {
         console.debug("it worked! valid move")
         newSquare.append(piece.css('position','static'));
       }).fail(function() {
-        // console.debug("the world hates me")
+        // console.debug("the world really really hates me")
         // move piece back - invalid move
       });
       
