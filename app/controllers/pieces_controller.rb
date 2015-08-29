@@ -1,6 +1,6 @@
 class PiecesController < ApplicationController
 	before_action :select_pc, :only => [:show, :update]
-	before_action :only => :update do 
+	before_action :only => :update do
 		validate_move(:x_position, :y_position)
 	end
 	before_action :not_my_turn?, :only => :udate
@@ -17,7 +17,7 @@ class PiecesController < ApplicationController
 
 		redirect_to game_path(select_pc.game.id)
 
-		change_player_turn(color)
+		# change_player_turn(color)
 	end
 
 	private
