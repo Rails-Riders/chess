@@ -3,7 +3,7 @@ class Piece < ActiveRecord::Base
   belongs_to :game
 
   def self.types
-    %w(Pawn Rook Knight Bishop Queen f)
+    %w(Pawn Rook Knight Bishop Queen King)
   end
 
    # This checks the database for a potential obstacle on a single location
