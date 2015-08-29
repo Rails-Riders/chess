@@ -5,12 +5,15 @@ class GameInCheckTest < ActiveSupport::TestCase
      g = Game.create
      expected = true
 
-     p = g.pieces.find_by(x_position: 4, y_position: 2, type: 'pawn', color: "black")
-     k = g.pieces.find_by(x_position: 5, y_position: 1, color: "white", type: 'King')
+     black_p = g.pieces.find_by(:x_position => 4, :y_position => 7, :type => 'Pawn', color: 0)
+     deactivate_white_pawn = g.pieces.find_by(:x_position => 4, :y_position => 2).update_attributes(:active => 0)
+     black_p.update_attributes(:y_position => 2)
 
-     p.valid_move?(king.x_position: 5, king.y_position: 1)
+     white_k = g.pieces.find_by(:x_position => 5, :y_position => 1, :color => 1, :type => 'King')
+     check_color = white_k.color
+     actual = g.in_check?(check_color)
 
-     assert_equal true, g.in_check?(1)
+     assert_equal expected, actual
   end
 
 end
