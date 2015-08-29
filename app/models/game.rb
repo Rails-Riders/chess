@@ -69,5 +69,21 @@ class Game < ActiveRecord::Base
       y2 = 7
       color = 0
     end  
+
   end
+
+  def in_check?(color)
+    king = pieces.find_by(type: 'king', color: color)
+    opponents_pieces = pieces(!color)
+
+    opponents_pieces.each do |piece|
+      if piece.valid_move?(king.x_position, king.y_position)
+        @checking_piece = piece
+        return true
+      else
+        return false
+      end
+    end
+  end
+  
 end
