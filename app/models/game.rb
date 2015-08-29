@@ -7,6 +7,7 @@ class Game < ActiveRecord::Base
    # :in_check(:color)
   #end
   after_create :populate_board!
+  after_create :default_turn
 
 
   def populate_board!
@@ -94,5 +95,9 @@ class Game < ActiveRecord::Base
     @king = pieces.find_by(type: 'King', color: color)
     piece_moving = pieces.find_by(id: piece_id)
     piece_moving == @king ? (@king_position = col, row) : (@king_position = @king.x_position, @king.y_position)
+  end
+
+  def default_turn
+    update_attributes(player_turn: 1)
   end
 end
