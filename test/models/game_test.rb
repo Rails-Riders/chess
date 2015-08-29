@@ -36,7 +36,7 @@ class GameTest < ActiveSupport::TestCase
   test "correct rook positions" do
     game = Game.create
 
-    correct_positions = [[1, 1], [8, 1], [1, 8], [8, 8]] 
+    correct_positions = [[1, 1], [8, 1], [1, 8], [8, 8]]
 
     actual_positions = game.pieces.where( :type => 'Rook' ).pluck( :x_position, :y_position )
 
@@ -99,7 +99,7 @@ class GameTest < ActiveSupport::TestCase
   test "correct queen positions" do
     game = Game.create
 
-    actual_positions = [[4, 1], [4, 8]] 
+    actual_positions = [[4, 1], [4, 8]]
 
     positions = game.pieces.where( :type => 'Queen' ).pluck( :x_position, :y_position )
 
