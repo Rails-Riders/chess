@@ -3,6 +3,7 @@ class PiecesController < ApplicationController
 	before_action :only => :update do 
 		validate_move(:x_position, :y_position)
 	end
+	before_action :not_my_turn?, :only => :udate
 
 	def show
 		@pieces = select_pc.game.pieces
@@ -13,10 +14,19 @@ class PiecesController < ApplicationController
 		row = params[:y_position].to_i
 		col = params[:x_position].to_i
 		@select_pc.move_to!(col, row)
+
 		redirect_to game_path(select_pc.game.id)
+
+		change_player_turn(color)
 	end
 
 	private
+
+	def not_my_turn?
+		if @game.player_turn != current_player.color
+			flash[:alert] = "Be patient...it's not yet your turn."
+		end
+	end
 
 	def validate_move(x_position, y_position)
 		row = params[:y_position].to_i

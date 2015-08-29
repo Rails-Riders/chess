@@ -7,6 +7,15 @@ class Piece < ActiveRecord::Base
     %w(Pawn Rook Knight Bishop Queen King)
   end
 
+  # Change player turn
+  def change_player_turn(color)
+    if color == 1
+      update_attributes(player_turn: 0)
+    else
+      update_attributes(player_turn: 1)
+    end
+  end
+
    # This checks the database for a potential obstacle on a single location
   def obstacle?(check_x, check_y)
     game.pieces.exists?(:x_position => check_x,
