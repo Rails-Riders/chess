@@ -18,7 +18,7 @@ class PiecesController < ApplicationController
 
 		redirect_to game_path(select_pc.game.id)
 
-		change_player_turn(color)
+		# change_player_turn(color)
 	end
 
   private
