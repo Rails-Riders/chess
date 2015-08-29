@@ -1,10 +1,11 @@
 require 'pry'
 class PiecesController < ApplicationController
+<<<<<<< HEAD
 	before_action :select_pc, :only => [:show, :update]
 	before_action :only => :update do
 		validate_move(:x_position, :y_position)
 	end
-	before_action :not_my_turn?, :only => :udate
+	before_action :not_my_turn?, :only => :update
 
   def show
     @game = select_pc.game

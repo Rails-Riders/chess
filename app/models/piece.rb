@@ -121,6 +121,10 @@ class Piece < ActiveRecord::Base
     end
   end
 
+  def prevent_check?
+    return true if game.in_check?(color)
+  end
+
   def friendly_piece?(new_x, new_y)
     obstacle_piece = game.pieces.find_by(:x_position => new_x,
                                          :y_position => new_y,
