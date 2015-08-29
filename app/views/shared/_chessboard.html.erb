@@ -10,7 +10,7 @@
           <% 1.upto(8) do |col| %>
             <td class= "<%= board_squares(row) %>">
               <%= link_to piece_path(id: @select_pc.id, x_position: col, y_position: row), method: :put do %>
-                <div class="squares">
+                <div class="squares draggable">
                   <%  @pieces.detect do |piece| %>
                     <% if piece.x_position == col && piece.y_position == row %>
                       <%= link_to piece_color(piece), piece_path(piece.id), :class => hilite(piece) %>
