@@ -2,7 +2,7 @@ class Pawn < Piece
 
 	def valid_move?(new_x, new_y)
 		[move_number_allowed?(new_y), 
-			no_vertical_obstacle?(new_y), 
+			no_vertical_obstacle?(new_x, new_y), 
 			not_a_backwards_move?(new_y), 
 			diagonal_move_allowed?(new_x, new_y)].all?
 	end
@@ -19,7 +19,8 @@ class Pawn < Piece
 	  (color == 1 && y_position == 2) || (color == 0 && y_position == 7) 
   end
 
-	def no_vertical_obstacle?(new_y)
+	def no_vertical_obstacle?(new_x, new_y)
+		return true if x_position != new_x
 		if move_number(new_y) == 2 
 			!is_obstructed?(x_position, new_y) && no_vertical_adjacent_obstacle?(x_position, new_y) 
 		else

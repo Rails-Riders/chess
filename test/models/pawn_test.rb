@@ -69,11 +69,11 @@ class PawnTest < ActiveSupport::TestCase
  		
  		expected = false
  		# Check for vertical obstacle for white pawn
- 		actual = @white_pawn.no_vertical_obstacle?(6)
+ 		actual = @white_pawn.no_vertical_obstacle?(5, 6)
  		assert_equal expected, actual
 
  		# Check for vertical obstacle for black pawn
- 		actual = @black_pawn.no_vertical_obstacle?(5)
+ 		actual = @black_pawn.no_vertical_obstacle?(5, 5)
  		assert_equal expected, actual
 	end
 
@@ -232,6 +232,17 @@ class PawnTest < ActiveSupport::TestCase
     
     actual = @black_pawn.valid_move?(7, 5)
     
+    assert_equal expected, actual
+  end
+
+  test "check capturing of enemy when there is a vertical obstacle" do 
+		@white_pawn.update(:x_position => 1, :y_position => 6)
+    @black_pawn.update(:x_position => 2, :y_position => 7)
+    @black_pawn_vertical = @game.pieces.find_by(:x_position => 1, :y_position => 7)
+    expected = true
+    # White pawn can capture a northeast enemy even if vertical-north square is occupied.
+    actual = @white_pawn.valid_move?(2,7)
+
     assert_equal expected, actual
   end
 end
