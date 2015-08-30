@@ -20,4 +20,9 @@
   margin: -2px -2px;
   line-height: 1.7;
   display: inline-block;
+  position: relative;
+}
+
+.inactive {
+	display: hidden;
 }

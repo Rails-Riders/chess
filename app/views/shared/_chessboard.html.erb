@@ -11,13 +11,12 @@
             <td class= "<%= board_squares(row) %>">
               <%= link_to piece_path(id: @select_pc.id, x_position: col, y_position: row), method: :put do %>
                 <div class="squares draggable">
+              <%= link_to '', piece_path(id: @select_pc.id, x_position: col, y_position: row), :class => square_link(@select_pc), method: :put %>
                   <%  @pieces.detect do |piece| %>
-                    <% if piece.x_position == col && piece.y_position == row %>
+                    <% if piece.x_position == col && piece.y_position == row && piece.active == 1 %>
                       <%= link_to piece_color(piece), piece_path(piece.id), :class => hilite(piece) %>
                     <% end %>
-                  <% end %>
-                </div>
-             <% end %>
+                  <% end %>                
             </td>
           <% end %>
         </tr>
