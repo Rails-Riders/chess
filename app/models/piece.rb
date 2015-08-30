@@ -121,6 +121,8 @@ class Piece < ActiveRecord::Base
     if obstacle_piece.nil?
       return false
     else
+      obstacle_piece = Piece.find_by(
+      :x_position => new_x, :y_position => new_y, :active => 1)
       obstacle_piece.color == color
     end
   end
