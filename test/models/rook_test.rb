@@ -58,27 +58,6 @@ class RookTest < ActiveSupport::TestCase
 		actual = rook.valid_move?(5, 3)
 		assert_equal expected, actual
 
-		#move off board east
-		actual = rook.valid_move?(3, 9)
-		assert_equal expected, actual
-
-		#move off board west
-		actual = rook.valid_move?(3, 0)
-		assert_equal expected, actual
-
-		#move off board south
-		actual = rook.valid_move?(9, 5)
-		assert_equal expected, actual
-
-		#move off board north
-		actual = rook.valid_move?(0, 5)
-		assert_equal expected, actual
-
-		#move to current square
-		actual = rook.valid_move?(3, 5)
-		assert_equal expected, actual
-
-
 	end
 
 end
