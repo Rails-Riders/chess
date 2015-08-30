@@ -107,11 +107,11 @@ class Piece < ActiveRecord::Base
   end
 
   def friendly_piece?(new_x, new_y)
-    obstacle_piece = Piece.find_by(
-      :x_position => new_x, :y_position => new_y, :active => 1)
-    if obstacle_piece.nil?
+    if !obstacle?(new_x, new_y)
       return false
     else
+      obstacle_piece = Piece.find_by(
+      :x_position => new_x, :y_position => new_y, :active => 1)
       obstacle_piece.color == color
     end
   end 
