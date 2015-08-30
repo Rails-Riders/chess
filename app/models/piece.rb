@@ -1,6 +1,6 @@
 require 'pry'
 class Piece < ActiveRecord::Base
-	belongs_to :user
+  belongs_to :user
   belongs_to :game
 
   def self.types

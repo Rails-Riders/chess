@@ -1,7 +1,7 @@
 class Game < ActiveRecord::Base
   belongs_to :user
   has_many :pieces
-  
+
   after_create :populate_board!
 
   def populate_board!
@@ -11,10 +11,10 @@ class Game < ActiveRecord::Base
     y2 = 2
     color = 1
 
-    # Create white pieces locations on 1st loop and then 
+    # Create white pieces locations on 1st loop and then
     # the black pieces locations on the 2nd loop
     2.times do
-      # Create 8 pawns                   
+      # Create 8 pawns
       1.upto(8) do |x|
         Pawn.create( :x_position => x,
                      :y_position => y2,
@@ -23,7 +23,7 @@ class Game < ActiveRecord::Base
                      :color      => color )
       end
 
-      # Create 2 rooks 
+      # Create 2 rooks
       1.step(8, 7) do |x|
         Rook.create( :x_position => x,
                      :y_position => y,
@@ -68,6 +68,6 @@ class Game < ActiveRecord::Base
       y = 8
       y2 = 7
       color = 0
-    end  
+    end
   end
 end
