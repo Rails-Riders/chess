@@ -8,13 +8,14 @@
       <% 8.downto(1) do |row| %>
         <tr>
           <% 1.upto(8) do |col| %>
-            <td class= "<%= board_squares(row) %>">
-              <%= link_to '', piece_path(id: @select_pc.id, x_position: col, y_position: row), :class => square_link(@select_pc), method: :put %>
-                  <%  @pieces.detect do |piece| %>
-                    <% if piece.x_position == col && piece.y_position == row && piece.active == 1 %>
-                      <%= link_to piece_color(piece), piece_path(piece.id), :class => hilite(piece) %>
-                    <% end %>
-                  <% end %>                
+            <td class= "<%= board_squares(row) %> droppable" data-square-row="<%= row %> " data-square-col="<%= col %>">            
+              <%  @pieces.detect do |piece| %>
+                <% if piece.x_position == col && piece.y_position == row %>
+                <div class="draggable piece color_<%= piece.color %>" data-piece-id="<%= piece.id %>" data-piece-starting-row="<%= row %>" data-piece-starting-col="<%= col %>">
+                  <%= piece_color(piece) %>
+                   </div>
+                <% end %>
+              <% end %>
             </td>
           <% end %>
         </tr>
