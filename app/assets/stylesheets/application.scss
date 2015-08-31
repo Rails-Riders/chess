@@ -10,9 +10,12 @@
  *
  *= require_self
  *= require_tree .
+  *= require jquery-ui
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+
 
 .hilite {
   background: rgba(255, 230, 0, 0.5);
