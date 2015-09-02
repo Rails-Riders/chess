@@ -7,6 +7,13 @@ class Piece < ActiveRecord::Base
     %w(Pawn Rook Knight Bishop Queen King)
   end
 
+  # def my_turn?(select_pc)
+  #   game = Game.find(select_pc.game_id)
+
+  #   game.player_turn == select_pc.color
+  #   end
+  # end
+
   # Change player turn
   def change_player_turn(color)
     if color == 1
@@ -123,7 +130,7 @@ class Piece < ActiveRecord::Base
     else
       obstacle_piece.color == color
     end
-  end 
+  end
 
   def off_the_board?(new_x, new_y)
     [new_x > 8, new_x < 1, new_y > 8, new_y < 1].any?
