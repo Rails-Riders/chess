@@ -392,5 +392,4 @@ class PieceTest < ActiveSupport::TestCase
 
 #----------------------- Test turn-logic -------------------------------------
 
-
 end
