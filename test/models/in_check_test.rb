@@ -11,7 +11,8 @@ class GameInCheckTest < ActiveSupport::TestCase
 
      white_k = g.pieces.find_by(:x_position => 5, :y_position => 1, :color => 1, :type => 'King')
      check_color = white_k.color
-     actual = g.in_check?(check_color)
+     position_in_check = black_p.x_position, black_p.y_position
+     actual = g.checking_piece?(black_p.id, check_color, *position_in_check)
 
      assert_equal expected, actual
   end

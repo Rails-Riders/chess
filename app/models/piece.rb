@@ -1,5 +1,5 @@
 class Piece < ActiveRecord::Base
-	belongs_to :user
+  belongs_to :user
   belongs_to :game
   has_many :types
 
@@ -106,19 +106,19 @@ class Piece < ActiveRecord::Base
     end
   end
 
-  def prevent_check?
-    return true if game.in_check?(color)
+  def moved_into_check?(color)
+    game.checking_piece?(color)
   end
 
   def friendly_piece?(new_x, new_y)
-    obstacle_piece = Piece.find_by(
+    obstacle_piece = game.pieces.find_by(
       :x_position => new_x, :y_position => new_y, :active => 1)
     if obstacle_piece.nil?
       return false
     else
       obstacle_piece.color == color
     end
-  end 
+  end
 
   def off_the_board?(new_x, new_y)
     [new_x > 8, new_x < 1, new_y > 8, new_y < 1].any?

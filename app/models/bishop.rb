@@ -6,7 +6,7 @@ class Bishop < Piece
     # Guard against a destination that is outside a chessboard's grid
     return false if dest_x < 1 || dest_x > 8
     return false if dest_y < 1 || dest_y > 8
-    
+
     # Guard against obstructions
     return false if is_obstructed?(dest_x, dest_y) == true
 
