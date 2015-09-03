@@ -69,9 +69,7 @@ class PiecesControllerTest < ActionController::TestCase
   end
 
   test "should update piece to new coordinates" do
-    game = Game.create
-
-    white_pawn = game.pieces.find_by(:x_position => 1, :y_position => 2)
+    white_pawn = @game.pieces.find_by(:x_position => 1, :y_position => 2)
 
     # Make the white pawn move via http request
     put :update, { id: white_pawn.id, x_position: 1, y_position: 3 }
@@ -81,6 +79,37 @@ class PiecesControllerTest < ActionController::TestCase
     expected = [1, 3]
 
     actual = [white_pawn.x_position, white_pawn.y_position]
+
+    assert_equal expected, actual
+  end
+
+  test "should update a game's player_turn after a piece moves" do
+    # Assume that this is the beginning of a game and that the game's
+    # player_turn automatically is set to 1 (indicating white's turn)
+    @game.update(:player_turn => 1)
+
+    white_pawn = @game.pieces.find_by(:x_position => 1, :y_position => 2)
+    black_pawn = @game.pieces.find_by(:x_position => 1, :y_position => 7)
+
+    # Make the white pawn move via http request
+    put :update, { id: white_pawn.id, x_position: 1, y_position: 3 }
+
+    @game.reload
+
+    expected = 0
+
+    actual = @game.player_turn
+
+    assert_equal expected, actual
+
+    # Make the black pawn move via http request
+    put :update, { id: black_pawn.id, x_position: 1, y_position: 6 }
+
+    @game.reload
+
+    expected = 1
+
+    actual = @game.player_turn
 
     assert_equal expected, actual
   end
