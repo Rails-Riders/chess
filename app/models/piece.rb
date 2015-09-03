@@ -7,12 +7,11 @@ class Piece < ActiveRecord::Base
     %w(Pawn Rook Knight Bishop Queen King)
   end
 
-  # def my_turn?(select_pc)
-  #   game = Game.find(select_pc.game_id)
+  def my_turn?(select_pc)
+    game = Game.find(select_pc.game_id)
 
-  #   game.player_turn == select_pc.color
-  #   end
-  # end
+    game.player_turn == select_pc.color
+  end
 
   # Change player turn
   def change_player_turn(color)
