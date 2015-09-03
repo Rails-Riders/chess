@@ -29,12 +29,14 @@ class PiecesController < ApplicationController
 		end
 	end
 
-	def validate_move(x_position, y_position)
-		row = params[:y_position].to_i
-		col = params[:x_position].to_i
-    #binding.pry
+  def validate_move(x_position, y_position)
+    row = params[:y_position].to_i
+    col = params[:x_position].to_i
     color = select_pc.color
-		if invalid_move?(col, row)
+
+    if !select_pc.my_turn?(select_pc)
+      flash[:alert] = "Be patient...it's not your turn yet."
+    elsif invalid_move?(col, row)
       flash[:alert] = "That move is not allowed!  Please choose your piece and try again."
     elsif put_self_in_check?(color, col, row)
       flash[:alert] = "You cannot put yourself in check"
