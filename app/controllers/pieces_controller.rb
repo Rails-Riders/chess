@@ -18,8 +18,8 @@ class PiecesController < ApplicationController
 
 		redirect_to game_path(select_pc.game.id)
 
-		# change_player_turn(color)
-	end
+    select_pc.change_player_turn(select_pc)
+  end
 
   private
 
