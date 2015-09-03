@@ -1,3 +1,13 @@
-// Place all the styles related to the pieces controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+div.piece.color_0 {
+/* dark */
+  color: red;
+}
+
+div.piece.color_1 {
+/* light */
+  color: blue;
+}
+
+div.piece.ui-draggable-dragging {
+    background-color: yellow;
+}
