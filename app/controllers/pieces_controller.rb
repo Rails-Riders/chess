@@ -4,9 +4,6 @@ class PiecesController < ApplicationController
 	before_action :only => :update do
 		validate_move(:x_position, :y_position)
 	end
-	#after_action :only => :update do
-	#	state_of_game(:player_turn)
-	#end
 
 	def show
 		@pieces = select_pc.game.pieces
@@ -21,16 +18,11 @@ class PiecesController < ApplicationController
 
   private
 
-	def state_of_game(color)
-    color = (color - 1).abs
-		if select_pc.game.in_check?(your_color)
-			flash[:alert] = "#{your_color}, you are in check!"
-		end
-	end
 
 	def validate_move(x_position, y_position)
 		row = params[:y_position].to_i
 		col = params[:x_position].to_i
+    #binding.pry
     color = select_pc.color
 		if invalid_move?(col, row)
       flash[:alert] = "That move is not allowed!  Please choose your piece and try again."
@@ -49,10 +41,6 @@ class PiecesController < ApplicationController
 
   def put_self_in_check?(color, col, row)
     select_pc.game.checking_piece?(color, select_pc.id, col, row)
-  end
-
-  def your_color
-    color == 0 ? your_color = "White" : your_color = "Black"
   end
 
   def select_pc

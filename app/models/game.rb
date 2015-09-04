@@ -1,7 +1,11 @@
+require 'pry'
 class Game < ActiveRecord::Base
   belongs_to :user
   has_many :pieces
 
+  #before_action only: :show do
+   # :in_check(:color)
+  #end
   after_create :populate_board!
 
 
@@ -73,14 +77,13 @@ class Game < ActiveRecord::Base
 
   end
 
-  #def in_check?(color)
-   # color = (color - 1).abs
-    #checking_piece?(color)
-  #end
+  def in_check?(color)
+    checking_piece?(color)
+  end
 
   def checking_piece?(color, piece_id, col, row)
     opponents_pieces = pieces.where.not(color: color, active: 0)
-    check_king(piece_id, color, col, row)
+    check_king(color, piece_id, col, row)
     opponents_pieces.each do |piece|
       piece.valid_move?(*@king_position) ? (return true) : false
     end
@@ -88,8 +91,8 @@ class Game < ActiveRecord::Base
   end
 
   def check_king(color, piece_id, col, row)
-    @king = Piece.find_by(type: 'King', color: color)
-    piece_moving = Piece.find_by(id: piece_id)
+    @king = pieces.find_by(type: 'King', color: color)
+    piece_moving = pieces.find_by(id: piece_id)
     piece_moving == @king ? (@king_position = col, row) : (@king_position = @king.x_position, @king.y_position)
   end
 end
