@@ -113,4 +113,59 @@ class PiecesControllerTest < ActionController::TestCase
 
     assert_equal expected, actual
   end
+
+  # test "should prevent waiting player from moving opponent's pieces" do
+  #   # For this test to be robust, it'll need to use the put method to transfer a
+  #   # player's id as a parameter to the backend. Currently it does NOT do that.
+  #   #
+  #   # -----------------------------------------------------------------
+  #   # Games table has:
+  #   # - player_turn
+  #   # - black_player_id
+  #   # - white_player_id
+  #   #
+  #   # Pieces table has
+  #   # - player_id
+  #   # - color
+  #   #
+  #   # if my_turn? detects a player moving a piece having his opponent's color
+  #     # flash[:alert] = "Be patient...it's not your turn yet."
+  #     # redirect_to game_path(select_pc.game.id)
+  #   # end
+  #   #
+
+
+  #   # Assume that 2 players have joined a game and are assigned their colors
+  #   white_player = FactoryGirl.create(:user, :id => 7)
+  #   black_player = FactoryGirl.create(:user, :id => 3)
+
+  #   game = FactoryGirl.create(:game,
+  #                             :id => 10,
+  #                             :player_turn => 1,
+  #                             :white_player_id => 7,
+  #                             :black_player_id => 3)
+
+
+  #   # Assume that the functionality of assigning players their respect pieces
+  #   # by color is already built and replicate that
+  #   white_pieces = game.pieces.where(:color => 1).update_all(:player_id => 7)
+
+  #   black_pieces = game.pieces.where(:color => 0).update_all(:player_id => 3)
+
+
+
+  #   white_pawn = game.pieces.find_by(:x_position => 1, :y_position => 2)
+  #   puts white_pawn.inspect
+
+  #   # Make the black player try to move a white piece move out of turn
+  #   put :update, { id: white_pawn.id, x_position: 1, y_position: 3 }
+
+  #   white_pawn.reload
+
+  #   expected = [1, 2]
+
+  #   actual = [white_pawn.x_position, white_pawn.y_position]
+
+  #   assert_equal expected, actual
+  # end
 end

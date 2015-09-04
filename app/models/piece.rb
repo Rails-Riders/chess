@@ -22,7 +22,10 @@ class Piece < ActiveRecord::Base
   def my_turn?(select_pc)
     game = Game.find(select_pc.game_id)
 
-    game.player_turn == select_pc.color
+    puts game.white_player_id.inspect
+    puts select_pc.player_id.inspect
+
+    game.player_turn == select_pc.color #&& game.white_player_id == select_pc.player_id
   end
 
    # This checks the database for a potential obstacle on a single location
@@ -125,8 +128,10 @@ class Piece < ActiveRecord::Base
   end
 
   def friendly_piece?(new_x, new_y)
-    obstacle_piece = Piece.find_by(
-      :x_position => new_x, :y_position => new_y, :active => 1)
+    obstacle_piece = game.pieces.find_by(:x_position => new_x,
+                                         :y_position => new_y,
+                                         :active => 1)
+
     if obstacle_piece.nil?
       return false
     else
@@ -143,6 +148,8 @@ class Piece < ActiveRecord::Base
   end
 
   def nil_move?(new_x, new_y)
-    [off_the_board?(new_x, new_y), friendly_piece?(new_x, new_y), going_nowhere?(new_x, new_y)].any?
+    [off_the_board?(new_x, new_y),
+     friendly_piece?(new_x, new_y),
+     going_nowhere?(new_x, new_y)].any?
   end
 end # end class
