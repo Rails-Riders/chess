@@ -22,9 +22,6 @@ class Piece < ActiveRecord::Base
   def my_turn?(select_pc)
     game = Game.find(select_pc.game_id)
 
-    puts game.white_player_id.inspect
-    puts select_pc.player_id.inspect
-
     game.player_turn == select_pc.color #&& game.white_player_id == select_pc.player_id
   end
 
