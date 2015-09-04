@@ -1,8 +1,13 @@
+require 'pry'
 class Game < ActiveRecord::Base
   belongs_to :user
   has_many :pieces
 
+  #before_action only: :show do
+   # :in_check(:color)
+  #end
   after_create :populate_board!
+
 
   def populate_board!
     # These are initialized to the white pieces' y coordinates. y2 is for the
@@ -69,5 +74,25 @@ class Game < ActiveRecord::Base
       y2 = 7
       color = 0
     end
+
+  end
+
+  def in_check?(color)
+    checking_piece?(color)
+  end
+
+  def checking_piece?(color, piece_id, col, row)
+    opponents_pieces = pieces.where.not(color: color, active: 0)
+    check_king(color, piece_id, col, row)
+    opponents_pieces.each do |piece|
+      piece.valid_move?(*@king_position) ? (return true) : false
+    end
+    return false
+  end
+
+  def check_king(color, piece_id, col, row)
+    @king = pieces.find_by(type: 'King', color: color)
+    piece_moving = pieces.find_by(id: piece_id)
+    piece_moving == @king ? (@king_position = col, row) : (@king_position = @king.x_position, @king.y_position)
   end
 end
