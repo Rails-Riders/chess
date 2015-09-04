@@ -1,7 +1,6 @@
 require 'pry'
 class PiecesController < ApplicationController
-<<<<<<< HEAD
-	before_action :select_pc, :only => [:show, :update]
+  before_action :select_pc, :only => [:show, :update]
 	before_action :only => :update do
 		validate_move(:x_position, :y_position)
 	end
