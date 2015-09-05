@@ -8,7 +8,6 @@ class Game < ActiveRecord::Base
   #end
   after_create :populate_board!
 
-
   def populate_board!
     # These are initialized to the white pieces' y coordinates. y2 is for the
     # pawns' y coordinate.
