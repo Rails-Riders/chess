@@ -29,5 +29,11 @@
     </table>
 
     <br />
+
+    <div class="turn-info">
+      <h3 class="turn-info__player player-<%= @game.player_turn %>">
+        <%= @game.player_turn == 1 ? "White" : "Black" %> player's turn
+      </h3>
+    </div>
   </div>
 </div>

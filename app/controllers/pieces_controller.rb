@@ -5,6 +5,7 @@ class PiecesController < ApplicationController
   end
 
   def show
+    @game = select_pc.game
     @pieces = select_pc.game.pieces
   end
 

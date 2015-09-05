@@ -3,7 +3,6 @@ class Game < ActiveRecord::Base
   has_many :pieces
 
   after_create :populate_board!
-  after_create :default_turn
 
   def populate_board!
     # These are initialized to the white pieces' y coordinates. y2 is for the
@@ -70,9 +69,5 @@ class Game < ActiveRecord::Base
       y2 = 7
       color = 0
     end
-  end
-
-  def default_turn
-    update_attributes(player_turn: 1)
   end
 end
