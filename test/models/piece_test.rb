@@ -389,7 +389,4 @@ class PieceTest < ActiveSupport::TestCase
 
     assert_equal expected, actual
   end
-
-  #----------------------- Test turn-logic -------------------------------------
-
 end
