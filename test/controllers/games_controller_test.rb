@@ -8,4 +8,10 @@ class GamesControllerTest < ActionController::TestCase
 
     assert_generates "games/1", {:controller => 'games', :action => 'show', :id => @game.id}
   end
+
+  # test "should randomly assign users their colors" do
+  #   game = Game.create
+
+  #   black_player
+  # end
 end

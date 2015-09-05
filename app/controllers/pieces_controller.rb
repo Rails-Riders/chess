@@ -5,27 +5,35 @@ class PiecesController < ApplicationController
   end
 
   def show
+    @game = select_pc.game
     @pieces = select_pc.game.pieces
   end
 
-	def update
-		row = params[:y_position].to_i
-		col = params[:x_position].to_i
+  def update
+    row = params[:y_position].to_i
+    col = params[:x_position].to_i
 
-		@select_pc.move_to!(col, row)
-		redirect_to game_path(select_pc.game.id)
-	end
+    @select_pc.move_to!(col, row)
+
+    redirect_to game_path(select_pc.game.id)
+
+    select_pc.change_player_turn(select_pc)
+  end
 
   private
 
-	def validate_move(x_position, y_position)
-		row = params[:y_position].to_i
-		col = params[:x_position].to_i
-		if !select_pc.valid_move?(col, row) || select_pc.nil_move?(col, row)
-			flash[:alert] = "That move is not allowed!  Please choose your piece and try again."
-			redirect_to game_path(select_pc.game.id)
-		end
-	end
+  def validate_move(x_position, y_position)
+    row = params[:y_position].to_i
+    col = params[:x_position].to_i
+
+    if !select_pc.my_turn?(select_pc)
+      flash[:alert] = "Be patient...it's not your turn yet."
+      redirect_to game_path(select_pc.game.id)
+    elsif !select_pc.valid_move?(col, row) || select_pc.nil_move?(col, row)
+      flash[:alert] = "That move is not allowed!  Please choose your piece and try again."
+      redirect_to game_path(select_pc.game.id)
+    end
+  end
 
   def select_pc
     @select_pc = Piece.find(params[:id])

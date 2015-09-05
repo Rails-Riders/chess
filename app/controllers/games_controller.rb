@@ -9,6 +9,14 @@ class GamesController < ApplicationController
     @game = Game.create(game_params)
   end
 
+  def new
+    @game = Game.new
+  end
+
+  def create
+    @game = Game.create(game_params)
+  end
+
   def show
     @game = Game.find(params[:id])
     @pieces = game.pieces

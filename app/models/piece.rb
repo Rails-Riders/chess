@@ -1,9 +1,28 @@
 class Piece < ActiveRecord::Base
   belongs_to :user
   belongs_to :game
+  has_many :types
 
   def self.types
     %w(Pawn Rook Knight Bishop Queen King)
+  end
+
+  # Change player turn
+  def change_player_turn(select_pc)
+    game = Game.find(select_pc.game_id)
+
+    if select_pc.color == 1
+      game.update(:player_turn => 0)
+    else
+      game.update(:player_turn => 1)
+    end
+  end
+
+  # Check which player's turn it is
+  def my_turn?(select_pc)
+    game = Game.find(select_pc.game_id)
+
+    game.player_turn == select_pc.color
   end
 
    # This checks the database for a potential obstacle on a single location
@@ -93,7 +112,6 @@ class Piece < ActiveRecord::Base
     # If no piece exists at the new location, just move to said location
     if friend_or_foe.nil?
       self.update(:x_position => new_x, :y_position => new_y)
-
     else
       # It's an enemy. Capture it
       friend_or_foe.update(:active => 0)
@@ -108,7 +126,8 @@ class Piece < ActiveRecord::Base
       return false
     else
       obstacle_piece = game.pieces.find_by(
-      :x_position => new_x, :y_position => new_y, :active => 1)
+        :x_position => new_x, :y_position => new_y, :active => 1)
+
       obstacle_piece.color == color
     end
   end
@@ -122,6 +141,8 @@ class Piece < ActiveRecord::Base
   end
 
   def nil_move?(new_x, new_y)
-    [off_the_board?(new_x, new_y), friendly_piece?(new_x, new_y), going_nowhere?(new_x, new_y)].any?
+    [off_the_board?(new_x, new_y),
+     friendly_piece?(new_x, new_y),
+     going_nowhere?(new_x, new_y)].any?
   end
 end # end class
