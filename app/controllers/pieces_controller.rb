@@ -1,6 +1,4 @@
-require 'pry'
 class PiecesController < ApplicationController
-<<<<<<< HEAD
   before_action :select_pc, :only => [:show, :update]
 	before_action :only => :update do
 		validate_move(:x_position, :y_position)
@@ -37,6 +35,7 @@ class PiecesController < ApplicationController
     row = params[:y_position].to_i
     col = params[:x_position].to_i
     color = select_pc.color
+
     if !select_pc.my_turn?(select_pc)
       flash[:alert] = "Be patient...it's not your turn yet."
 		elsif invalid_move?(col, row)
