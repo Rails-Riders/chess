@@ -1,7 +1,6 @@
 class Piece < ActiveRecord::Base
   belongs_to :user
   belongs_to :game
-  has_many :types
 
   def self.types
     %w(Pawn Rook Knight Bishop Queen King)
