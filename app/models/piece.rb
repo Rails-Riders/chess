@@ -21,7 +21,7 @@ class Piece < ActiveRecord::Base
   def my_turn?(select_pc)
     game = Game.find(select_pc.game_id)
 
-    game.player_turn == select_pc.color #&& game.white_player_id == select_pc.player_id
+    game.player_turn == select_pc.color
   end
 
    # This checks the database for a potential obstacle on a single location

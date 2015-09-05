@@ -52,8 +52,17 @@ a.square-link {
   left: 0px;
 }
 
+// Change color of the turn info title for white players
+.turn-info__player.player-0 {
+  color: #111;
+  text-shadow: 0px 1px 10px rgba(255,255,255,0.75);
+}
 
-
+// Change color of the turn info title for black players
+.turn-info__player.player-1 {
+  color: #EEEEEE;
+  text-shadow: 0px 1px 10px rgba(0,0,0,0.75);
+}
 
 
 

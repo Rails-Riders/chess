@@ -6,9 +6,10 @@ class PiecesController < ApplicationController
 	end
 	before_action :not_my_turn?, :only => :udate
 
-	def show
-		@pieces = select_pc.game.pieces
-	end
+  def show
+    @game = select_pc.game
+    @pieces = select_pc.game.pieces
+  end
 
 	def update
 		row = params[:y_position].to_i
