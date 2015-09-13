@@ -17,7 +17,7 @@ class Pawn < Piece
 
 	def first_move?(new_y)
 	  (color == 1 && y_position == 2) || (color == 0 && y_position == 7) 
-  end
+	end
 
 	def no_vertical_obstacle?(new_x, new_y)
 		return true if x_position != new_x
